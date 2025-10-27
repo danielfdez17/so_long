@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 13:27:10 by danfern3          #+#    #+#             */
-/*   Updated: 2025/10/27 12:20:07 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/10/27 13:11:56 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,22 @@ static void	read_map(char *filename)
 			break ;
 		}
 		ft_lstadd_back(&list, new_elem);
+		if (list->content_size != ft_strlen(line))
+		{
+			ft_lstclear(&list, free);
+			break ;
+		}
 		line = get_next_line(fd);
 	}
-	print_map(list);
-	char **map = create_map(list);
-	t_game *game = validate_map(map);
-	(void)game;
-	ft_lstclear(&list, free);
-	free_map(map);
+	if (list)
+	{
+		print_map(list);
+		char **map = create_map(list);
+		t_game *game = validate_map(map, list->size, list->content_size);
+		(void)game;
+		ft_lstclear(&list, free);
+		free_map(map);
+	}
 	close(fd);
 }
 

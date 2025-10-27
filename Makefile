@@ -6,7 +6,7 @@
 #    By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/26 13:24:06 by danfern3          #+#    #+#              #
-#    Updated: 2025/10/27 10:15:49 by danfern3         ###   ########.fr        #
+#    Updated: 2025/10/27 12:18:27 by danfern3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,17 +32,24 @@ LIBFT_DIR = ./inc/libft/
 LIBFT = ./inc/libft/libft.a
 
 # Sources
-SRCS_DIR = ./src/
+SRCS_DIR = ./src/solong/
 SRCS = \
 	so_long.c
 SOURCES = $(addprefix $(SRCS_DIR), $(SRCS))
 OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 
+# GNL sources
+GNL_DIR = ./src/get_next_line/
+GNL_SRCS = \
+	get_next_line.c \
+	get_next_line_utils.c
+
+GNL_APPEND = $(addprefix $(GNL_DIR), $(GNL_SRCS))
+SOURCES += $(GNL_APPEND)
+OBJS += $(addprefix $(OBJ_DIR), $(GNL_SRCS:.c=.o))
+
 # Objects
 OBJ_DIR = ./src/obj/
-
-# OBJS = $(addprefix $(OBJ_DIR),$(SOURCES))
-# OBJS = $(SRCS:.c=.o)
 
 # Input files
 FILE = ./files/test.ber
@@ -50,7 +57,10 @@ FILE = ./files/test.ber
 # RULES
 $(OBJ_DIR)%.o: $(SRCS_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ 
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJ_DIR)%.o:$(GNL_DIR)%.c
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME)	: $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) -o $(NAME)
@@ -58,7 +68,7 @@ $(NAME)	: $(OBJS) $(LIBFT)
 	@echo "${GREY}Compilation ${GREEN}[OK]$(RESET)"
 
 $(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR) bonus
 	@echo "${GREY}Compiling libft ${GREEN}[OK]$(RESET)"
 
 all: clearscreen obj $(NAME)
@@ -83,5 +93,8 @@ clearscreen:
 run: re
 	clear
 	./$(NAME) $(FILE)
+
+valgrind: re
+	valgrind ./$(NAME) $(FILE)
 
 .PHONY: all obj clean fclean re clearscreen run

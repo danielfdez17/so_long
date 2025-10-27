@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 07:46:21 by danfern3          #+#    #+#             */
-/*   Updated: 2025/10/07 09:55:00 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/10/27 11:53:03 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
+	int				size;
 }	t_list;
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dsize);

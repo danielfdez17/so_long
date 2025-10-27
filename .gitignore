@@ -1,5 +1,5 @@
 so_long
-!./src/so_long/
+!./src/so_long/*
 *main.c*
 # *minilibx-linux*
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,c,cmake

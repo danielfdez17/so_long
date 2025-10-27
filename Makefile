@@ -6,36 +6,82 @@
 #    By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/26 13:24:06 by danfern3          #+#    #+#              #
-#    Updated: 2025/10/26 13:41:34 by danfern3         ###   ########.fr        #
+#    Updated: 2025/10/27 10:15:49 by danfern3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+GREEN	= \033[0;32m
+RESET	= \033[0m
+GREY	= \033[1;30m
+LWHITE	= \033[2;37m
+LGREEN	= \033[2;32m
+
 NAME = so_long
 
-CCW = cc -Wall -Wextra -Werror
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+# CFLAGS += -fsanitize=address -g
+# CFLAGS += -lm
+# CFLAGS += --no-print-directory
 
 RM = rm -rf
 
-SRCS = so_long.c \
+INCLUDES = -I ./inc/headers -I $(LIBFT_DIR)
 
-OBJ_DIR = obj
+LIBFT_DIR = ./inc/libft/
+LIBFT = ./inc/libft/libft.a
 
-OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
+# Sources
+SRCS_DIR = ./src/
+SRCS = \
+	so_long.c
+SOURCES = $(addprefix $(SRCS_DIR), $(SRCS))
+OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 
-all: $(NAME)
+# Objects
+OBJ_DIR = ./src/obj/
 
-$(OBJ_DIR)/%.o: %.c
+# OBJS = $(addprefix $(OBJ_DIR),$(SOURCES))
+# OBJS = $(SRCS:.c=.o)
+
+# Input files
+FILE = ./files/test.ber
+
+# RULES
+$(OBJ_DIR)%.o: $(SRCS_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CCW) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ 
 
-$(NAME)	: $(OBJS)
+$(NAME)	: $(OBJS) $(LIBFT)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) -o $(NAME)
+	@echo "${LWHITE}$(NAME) ${LGREEN}✓$(RESET)"
+	@echo "${GREY}Compilation ${GREEN}[OK]$(RESET)"
+
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_DIR)
+	@echo "${GREY}Compiling libft ${GREEN}[OK]$(RESET)"
+
+all: clearscreen obj $(NAME)
+
+obj:
+	@mkdir -p $(OBJ_DIR)
 
 clean:
-	$(RM) $(OBJ_DIR)/
+	@$(RM) $(OBJS)
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	@echo "${LWHITE}Cleaning $(NAME)... ${LGREEN}✓$(RESET)"
 
 fclean: clean
-		$(RM) $(NAME)
+	@$(RM) $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+clearscreen:
+	clear
+
+run: re
+	clear
+	./$(NAME) $(FILE)
+
+.PHONY: all obj clean fclean re clearscreen run

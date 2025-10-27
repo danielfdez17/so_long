@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/27 08:12:45 by danfern3          #+#    #+#             */
-/*   Updated: 2025/10/27 10:59:20 by danfern3         ###   ########.fr       */
+/*   Created: 2025/10/08 16:54:36 by danfern3          #+#    #+#             */
+/*   Updated: 2025/10/27 10:53:10 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 128
+# endif
 
-#include <stdio.h>
-#include <stdlib.h>
-// #include <math.h>
-#include "../libft/libft.h"
-#include "../headers/get_next_line.h"
+# ifndef MAX_FD
+#  define MAX_FD 1024
+# endif
 
-typedef struct s_pos
-{
-	int	x;
-	int	y;
-} t_pos;
+# include <unistd.h>
+# include <stdlib.h>
 
-typedef struct s_game
-{
-	char	**map;
-	t_pos	player_pos;
-	t_pos	exit_pos;
-	int		exit_number;
-	int		player_number;
-	int		collectable_number;
-} t_game;
+char	*get_next_line(int fd);
+char	*ft_strjoin_gnl(char *s1, char *s2);
+size_t	ft_strlen_gnl(const char *s);
+char	*ft_strchr_gnl(const char *s, int c);
+char	*ft_substr_gnl(char *s, unsigned int start, size_t len);
 
 #endif

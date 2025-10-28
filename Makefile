@@ -6,7 +6,7 @@
 #    By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/26 13:24:06 by danfern3          #+#    #+#              #
-#    Updated: 2025/10/27 12:18:27 by danfern3         ###   ########.fr        #
+#    Updated: 2025/10/28 14:52:31 by danfern3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,7 @@ run: re
 	clear
 	./$(NAME) $(FILE)
 
-valgrind: re
+valgrind: all
 	valgrind ./$(NAME) $(FILE)
 
 .PHONY: all obj clean fclean re clearscreen run

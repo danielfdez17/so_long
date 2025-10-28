@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 13:27:10 by danfern3          #+#    #+#             */
-/*   Updated: 2025/10/27 13:11:56 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:55:00 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	read_map(char *filename)
 	t_list	*new_elem;
 	t_list	*list;
 
+	(void)new_elem;
 	list = NULL;
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
@@ -37,31 +38,38 @@ static void	read_map(char *filename)
 		return ;
 	}
 	line = get_next_line(fd);
-	while (line)
-	{
-		new_elem = ft_lstnew(line);
-		if (!new_elem)
-		{
-			ft_lstclear(&list, free);
-			break ;
-		}
-		ft_lstadd_back(&list, new_elem);
-		if (list->content_size != ft_strlen(line))
-		{
-			ft_lstclear(&list, free);
-			break ;
-		}
-		line = get_next_line(fd);
-	}
+	// while (line)
+	// {
+	// 	new_elem = ft_lstnew(line);
+	// 	if (!new_elem)
+	// 	{
+	// 		ft_lstclear(&list, free);
+	// 		break ;
+	// 	}
+	// 	ft_lstadd_back(&list, new_elem);
+	// 	if (list->content_size != (int)ft_strlen(line))
+	// 	{
+	// 		ft_lstclear(&list, free);
+	// 		break ;
+	// 	}
+	// 	free(line);
+	// 	line = get_next_line(fd);
+	// }
 	if (list)
 	{
 		print_map(list);
 		char **map = create_map(list);
 		t_game *game = validate_map(map, list->size, list->content_size);
 		(void)game;
+		if (game)
+			free(game);
 		ft_lstclear(&list, free);
 		free_map(map);
+		// free(line);
 	}
+	// malloc(sizeof(char));
+	// if (line)
+	// free(line);
 	close(fd);
 }
 

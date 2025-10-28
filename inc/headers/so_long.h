@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 08:12:45 by danfern3          #+#    #+#             */
-/*   Updated: 2025/10/27 14:09:44 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/10/28 13:58:17 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char **create_map(t_list *list)
 {
 	char	**map;
 	int		i;
-	ssize_t	line_size;
+	int	line_size;
 
 	line_size = -1;
 	map = malloc(sizeof(char *) * (list->size + 1));
@@ -65,7 +65,7 @@ char **create_map(t_list *list)
 		map[i] = ft_strdup((char *)list->content);
 		if (!map[i])
 			return (free_map(map));
-		if (line_size != -1 && line_size != ft_strlen(map[i]))
+		if (line_size != -1 && line_size != (int)ft_strlen(map[i]))
 			return (free_map(map));
 		line_size = ft_strlen(map[i]);
 		++i;
@@ -143,8 +143,8 @@ t_game	*validate_map(char **map, int rows, int cols)
 		}
 		i++;
 	}
-	// free(game);
-	return (game);
+	free(game);
+	return (NULL);
 }
 
 #endif

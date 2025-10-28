@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 16:54:42 by danfern3          #+#    #+#             */
-/*   Updated: 2025/10/27 11:28:02 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:53:36 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ static char	*ft_read_file(int fd, char *static_buff)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	char	*buffer;
 	char		*line;
 
+	buffer = NULL;
 	if (fd < 0 || fd > MAX_FD || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = ft_read_file(fd, buffer);

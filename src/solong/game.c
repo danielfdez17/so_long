@@ -2,12 +2,12 @@
 
 #include "../../inc/headers/so_long.h"
 
-static t_pos	init_pos()
+t_pos	init_pos(int x, int y)
 {
 	t_pos	pos;
 
-	pos.x = -1;
-	pos.y = -1;
+	pos.x = x;
+	pos.y = y;
 	return (pos);
 }
 
@@ -19,8 +19,8 @@ t_game	*init_game()
 	if (!game)
 		return (NULL);
 	game->map = NULL;
-	game->player_pos = init_pos();
-	game->exit_pos = init_pos();
+	game->player_pos = init_pos(-1, -1);
+	game->exit_pos = init_pos(-1, -1);
 	game->player_number = 0;
 	game->exit_number = 0;
 	game->collectable_number = 0;

@@ -10,24 +10,30 @@
 #                                                                              #
 # **************************************************************************** #
 
+# Colors
 GREEN	= \033[0;32m
 RESET	= \033[0m
 GREY	= \033[1;30m
 LWHITE	= \033[2;37m
 LGREEN	= \033[2;32m
 
+# Program name
 NAME = so_long
 
+# Compilation
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 # CFLAGS += -fsanitize=address
 # CFLAGS += -lm
 # CFLAGS += --no-print-directory
 
+# Removal
 RM = rm -rf
 
+# Includes
 INCLUDES = -I ./inc/headers -I $(LIBFT_DIR)
 
+# LIBFT
 LIBFT_DIR = ./inc/libft/
 LIBFT = ./inc/libft/libft.a
 
@@ -51,6 +57,14 @@ GNL_APPEND = $(addprefix $(GNL_DIR), $(GNL_SRCS))
 SOURCES += $(GNL_APPEND)
 OBJS += $(addprefix $(OBJ_DIR), $(GNL_SRCS:.c=.o))
 
+# MLX42
+MLX42 = ./inc/MLX42/libmlx42.a
+MLX42_DIR = ./inc/MLX42
+# CFLAGS += -I include
+# CFLAGS += -ldl
+# CFLAGS += -lglfw
+# CFLAGS += -lm
+
 # Objects
 OBJ_DIR = ./src/obj/
 
@@ -65,6 +79,7 @@ $(OBJ_DIR)%.o: $(SRCS_DIR)%.c
 $(OBJ_DIR)%.o:$(GNL_DIR)%.c
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+# TODO: add MLX42 library
 $(NAME)	: $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) -o $(NAME)
 	@echo "${LWHITE}$(NAME) ${LGREEN}✓$(RESET)"
@@ -73,6 +88,9 @@ $(NAME)	: $(OBJS) $(LIBFT)
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) bonus
 	@echo "${GREY}Compiling libft ${GREEN}[OK]$(RESET)"
+
+# $(MLX42):
+# 	@$(MAKE) -C $(MLX42_DIR)
 
 all: clearscreen obj $(NAME)
 
@@ -103,4 +121,4 @@ debug: all
 	clear
 	gdb ./$(NAME)
 
-.PHONY: all obj clean fclean re clearscreen run
+.PHONY: all obj clean fclean re clearscreen run valgrind debug

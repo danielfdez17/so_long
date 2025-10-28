@@ -42,7 +42,7 @@ t_bool	generate_map(t_game **game)
 	list = (*game)->list;
 	map = (*game)->map;
 	(*game)->rows = (*game)->list->size;
-	(*game)->cols = (*game)->list->content_size - 1;
+	(*game)->cols = (*game)->list->content_size;
 	i = 0;
 	while (list)
 	{
@@ -83,7 +83,7 @@ t_bool	validate_map(t_game *game)
 
 	map = game->map;
 	i = 0;
-	// printf("game->rows: %d, game->cols: %d\n", game->rows, game->cols);
+	printf("game->rows: %d, game->cols: %d\n", game->rows, game->cols);
 	while (i < game->rows)
 	{
 		j = 0;

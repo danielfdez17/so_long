@@ -48,7 +48,7 @@ static char	*ft_till_endl(char *s)
 	while (s[new_size])
 	{
 		if (s[new_size] == '\n')
-			return (ft_substr_gnl(s, 0, new_size + 1));
+			return (ft_substr_gnl(s, 0, new_size - 1));
 		++new_size;
 	}
 	return (ft_substr_gnl(s, 0, new_size));

@@ -37,24 +37,25 @@ static void	read_map(char *filename)
 		ft_putendl_fd("Error al abrir el archivo", 2);
 		return ;
 	}
-	line = get_next_line(fd);
-	// while (line)
-	// {
-	// 	new_elem = ft_lstnew(line);
-	// 	if (!new_elem)
-	// 	{
-	// 		ft_lstclear(&list, free);
-	// 		break ;
-	// 	}
-	// 	ft_lstadd_back(&list, new_elem);
-	// 	if (list->content_size != (int)ft_strlen(line))
-	// 	{
-	// 		ft_lstclear(&list, free);
-	// 		break ;
-	// 	}
-	// 	free(line);
-	// 	line = get_next_line(fd);
-	// }
+	line = get_next_line(fd, 0);
+	while (line)
+	{
+		new_elem = ft_lstnew(line);
+		if (!new_elem)
+		{
+			ft_lstclear(&list, free);
+			break ;
+		}
+		ft_lstadd_back(&list, new_elem);
+		if (list->content_size != (int)ft_strlen(line))
+		{
+			ft_lstclear(&list, free);
+			break ;
+		}
+		free(line);
+		line = get_next_line(fd, 0);
+	}
+	line = get_next_line(fd, 1);
 	if (list)
 	{
 		print_map(list);

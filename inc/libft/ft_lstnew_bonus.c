@@ -22,5 +22,6 @@ t_list	*ft_lstnew(void *content)
 	result->content = content;
 	result->next = NULL;
 	result->size = 1;
+	result->content_size = (int)ft_strlen((char *)content);
 	return (result);
 }

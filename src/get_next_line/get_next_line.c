@@ -86,7 +86,7 @@ char	*get_next_line(int fd, int free_static_buff)
 	static char	*buffer;
 	char		*line;
 
-	if (free_static_buff)
+	if (free_static_buff == 1)
 	{
 		free(buffer);
 		return (NULL);

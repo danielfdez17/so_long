@@ -19,8 +19,8 @@ LGREEN	= \033[2;32m
 NAME = so_long
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-# CFLAGS += -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -g
+# CFLAGS += -fsanitize=address
 # CFLAGS += -lm
 # CFLAGS += --no-print-directory
 
@@ -34,6 +34,9 @@ LIBFT = ./inc/libft/libft.a
 # Sources
 SRCS_DIR = ./src/solong/
 SRCS = \
+	file.c \
+	game.c \
+	map.c \
 	so_long.c
 SOURCES = $(addprefix $(SRCS_DIR), $(SRCS))
 OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
@@ -96,5 +99,12 @@ run: re
 
 valgrind: all
 	valgrind ./$(NAME) $(FILE)
+
+debug: fclean $(OBJS) $(LIBFT)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) -o $(NAME)
+	@echo "${LWHITE}$(NAME) ${LGREEN}✓$(RESET)"
+	@echo "${GREY}DEBUGGIN ${GREEN}[OK]$(RESET)"
+	clear
+	gdb ./$(NAME)
 
 .PHONY: all obj clean fclean re clearscreen run

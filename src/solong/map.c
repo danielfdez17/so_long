@@ -13,26 +13,18 @@ void	print_list(t_list *list)
 	ft_putendl_fd("\n", 1);
 }
 
-void	print_map(char **map, int rows, int cols)
+void	print_map(char **map, int rows)
 {
 	int	i;
-	int	j;
 
+	ft_putendl_fd(__func__, 1);
 	i = 0;
 	while (i < rows)
 	{
-		j = 0;
-		while (j < cols)
-		{
-			ft_putchar_fd(map[i][j], 1);
-			j++;
-		}
-		ft_putchar_fd('\n', 1);
+		ft_putendl_fd(map[i], 1);
 		i++;
 	}
-	ft_putchar_fd('\n', 1);
 }
-
 
 t_bool	generate_map(t_game **game)
 {
@@ -49,6 +41,8 @@ t_bool	generate_map(t_game **game)
 		return (0);
 	list = (*game)->list;
 	map = (*game)->map;
+	(*game)->rows = (*game)->list->size;
+	(*game)->cols = (*game)->list->content_size - 1;
 	i = 0;
 	while (list)
 	{
@@ -62,10 +56,11 @@ t_bool	generate_map(t_game **game)
 		list = list->next;
 	}
 	map[i] = NULL;
+	// print_map(map, (*game)->rows);
 	return (1);
 }
 
-static int	is_border(int rows, int cols, int x, int y)
+static t_bool	is_border(int rows, int cols, int x, int y)
 {
 	if (x == 0 || x == rows - 1)
 		return (1);
@@ -74,6 +69,12 @@ static int	is_border(int rows, int cols, int x, int y)
 	return (0);
 }
 
+static t_bool	is_valid_char(char c)
+{
+	return (c == '1' || c == '0' || c == 'E' || c == 'P' || c == 'C');
+}
+
+// ! IDEA: devolver un numero de error y asociarlo a un mensaje
 t_bool	validate_map(t_game *game)
 {
 	int		i;
@@ -82,13 +83,19 @@ t_bool	validate_map(t_game *game)
 
 	map = game->map;
 	i = 0;
-	while (map && map[i][j] && i < game->rows)
+	// printf("game->rows: %d, game->cols: %d\n", game->rows, game->cols);
+	while (i < game->rows)
 	{
 		j = 0;
-		while (map && map[i][j] && j < game->cols)
+		while (j < game->cols)
 		{
+			if (!is_valid_char(map[i][j]))
+				return (0);
 			if (is_border(game->rows, game->cols, i, j) && map[i][j] != '1')
-				break ;
+			{
+				printf("i: %d, j: %d, char: %c (int: %d)\n", i, j, map[i][j], (int)map[i][j]);
+				return (0);
+			}
 			if (map[i][j] == 'P')
 			{
 				game->player_pos.x = i;
@@ -107,5 +114,9 @@ t_bool	validate_map(t_game *game)
 		}
 		i++;
 	}
+	if (game->player_number > 1 || game->exit_number > 1 ||
+		game->player_number == 0 || game->exit_number == 0 ||
+		game->collectable_number == 0)
+		return (0);
 	return (1);
 }

@@ -2,6 +2,24 @@
 
 #include "../../inc/headers/so_long.h"
 
+void	clear_new_lines(char **s)
+{
+	int		i;
+	char	*str;
+
+	str = *s;
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] == '\n')
+		{
+			// printf("SALTO DE LÍNEA QUITADO EN POS %d\n", i);
+			str[i] = 0;
+		}
+		++i;
+	}
+}
+
 t_bool	generate_list(int fd, t_game **game)
 {
 	char	*line;
@@ -14,6 +32,8 @@ t_bool	generate_list(int fd, t_game **game)
 	line = get_next_line(fd, 0);
 	while (line)
 	{
+		clear_new_lines(&line);
+		// printf("LONGITUD LINEA LEIDA: %d\n", (int)ft_strlen(line));
 		new_elem = ft_lstnew(line);
 		if (!new_elem)
 		{
@@ -32,7 +52,7 @@ t_bool	generate_list(int fd, t_game **game)
 		line = get_next_line(fd, 0);
 	}
 	line = get_next_line(fd, 1);
-	print_list(list);
+	// print_list(list);
 	(*game)->list = list;
 	return (res);
 }
@@ -49,13 +69,13 @@ void	read_map(char *filename)
 		return ;
 	}
 	game = init_game();
-	if (!generate_list(fd, &game))
-		free_game(game);
-	// if (!generate_map(&game))
-	// 	free_game(game);
-	// print_map(game->map, game->rows, game->cols);
-	// if (!validate_map(game))
-	// 	free_game(game);
-	
+	if (!generate_list(fd, &game) || !generate_map(&game))
+		ft_putendl_fd("Error al generar el mapa", 2);
+	if (!validate_map(game))
+	{
+		print_map(game->map, game->rows);
+		ft_putendl_fd("El mapa no es valido", 2);
+	}
 	close(fd);
+	free_game(game);
 }

@@ -27,7 +27,7 @@ int main(int ac, char **av)
 		ft_putendl_fd("El programa debe recibir un archivo .ber", 2);
 		return (0);
 	}
-	ft_putendl_fd("Archivo correcto", 1);
+	// ft_putendl_fd("Archivo correcto", 1);
 	read_map(av[1]);
 	return (0);
 }

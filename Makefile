@@ -93,17 +93,13 @@ re: fclean all
 clearscreen:
 	clear
 
-run: re
-	clear
+run: all
 	./$(NAME) $(FILE)
 
 valgrind: all
 	valgrind ./$(NAME) $(FILE)
 
-debug: fclean $(OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) -o $(NAME)
-	@echo "${LWHITE}$(NAME) ${LGREEN}✓$(RESET)"
-	@echo "${GREY}DEBUGGIN ${GREEN}[OK]$(RESET)"
+debug: all
 	clear
 	gdb ./$(NAME)
 

@@ -44,7 +44,7 @@ typedef int	t_bool;
 // Todo: DELETE DELETE DELETE
 // ! FOR TESTING
 void	print_list(t_list *list);
-void	print_map(char **map, int rows, int cols);
+void	print_map(char **map, int rows);
 
 
 // * FILES

@@ -22,6 +22,7 @@ t_game	*init_game()
 	game->player_pos = init_pos();
 	game->exit_pos = init_pos();
 	game->player_number = 0;
+	game->exit_number = 0;
 	game->collectable_number = 0;
 	game->rows = 0;
 	game->cols = 0;

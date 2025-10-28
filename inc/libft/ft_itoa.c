@@ -19,27 +19,27 @@ static int	ft_get_len(int n)
 
 	i = 0;
 	ln = n;
-	if (n == 0)
+	if (ln == 0)
 		return (1);
-	if (n < 0)
+	if (ln < 0)
 		++i;
-	while (n != 0)
+	while (ln != 0)
 	{
-		n /= 10;
+		ln /= 10;
 		++i;
 	}
-	if (n < 0)
+	if (ln < 0)
 	{
-		while (n < 0)
+		while (ln < 0)
 		{
-			n /= 10;
+			ln /= 10;
 			++i;
 		}
 		return (i + 1);
 	}
-	while (n > 0)
+	while (ln > 0)
 	{
-		n /= 10;
+		ln /= 10;
 		++i;
 	}
 	return (i);

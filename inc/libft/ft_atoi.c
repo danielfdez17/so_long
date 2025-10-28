@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static int	isspace(const char *s, size_t i)
+static int	ft_isspace(const char *s, size_t i)
 {
 	if (s[i] == ' ' || (s[i] >= '\t' && s[i] <= '\r'))
 		return (1);
@@ -55,7 +55,7 @@ int	ft_atoi(const char *nptr)
 	p_counter = 0;
 	n_counter = 0;
 	i = 0;
-	while (isspace(nptr, i))
+	while (ft_isspace(nptr, i))
 		++i;
 	while (issign(nptr, i, &p_counter, &n_counter))
 		++i;

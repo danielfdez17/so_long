@@ -38,29 +38,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 		--end;
 	return (ft_substr(s1, start, end - start + 1));
 }
-
-// #include <stdio.h>
-// int main(void)
-// {
-// 	char *result;
-// 	printf("%s|\n---\n", \
-// (	result = ft_strtrim("lorem \n ipsum \t dolor \n sit \t amet", " ")));
-// 	printf("%s|\n---\n", ft_strtrim("lorem ipsum dolor sit amet", "te"));
-// 	printf("%s|\n---\n", ft_strtrim(" lorem ipsum dolor sit amet", "l "));
-// 	printf("%s|\n---\n", ft_strtrim("lorem ipsum dolor sit amet", "tel"));
-// 	printf("%s|\n---\n", ft_strtrim("          ", " "));
-// 	printf("%s|\n---\n", ft_strtrim("  \t \t \n   \n\n\n\t", " \n\t"));
-// 	printf("%s|\n---\n", ft_strtrim("", " \n\t"));
-// 	printf("%s|\n---\n", ft_strtrim("   xxx   xxx", " x"));
-// 	printf("%s|\n---\n", ft_strtrim("", ""));
-// 	printf("%s|\n---\n", ft_strtrim("abcd", ""));
-// 	printf("%s|\n---\n", ft_strtrim("", "cdef"));
-// 	printf("%s|\n---\n", ft_strtrim(" . abcd", " "));
-// 	printf("%s|\n---\n", ft_strtrim("ab cd  f    ", " "));
-// 	printf("%s|\n---\n", \
-// ft_strtrim("xxxz  test with x and z and x .  zx  xx z", "z x"));
-// 	printf("%s|\n---\n", ft_strtrim("   abxfg  ", "x"));
-// 	printf("%s|\n---\n", ft_strtrim(".teste, bla ,.,.", ",."));
-// 	return (0);
-// }
-// // ccw ft_strtrim.c ft_strlen.c ft_substr.c ft_strdup.c -o a.out && ./a.out

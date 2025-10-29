@@ -9,7 +9,7 @@
 # define INVALID_CHAR_ERROR -5
 # define FILE_EXTENSION_ERROR -6
 # define INVALID_PATH_ERROR -7
-# define PLAYER_NUMBER_MSG "Error: There must be exactly one player ('E') on the map.\n"
+# define PLAYER_NUMBER_MSG "Error: There must be exactly one player ('P') on the map.\n"
 # define EXIT_NUMBER_MSG "Error: There must be exactly one exit ('E') on the map.\n"
 # define COLLECTABLE_NUMBER_MSG "Error: There must be at least one collectable ('C') on the map.\n"
 # define BORDER_MSG "Error: The map must be surrounded by walls ('1').\n"

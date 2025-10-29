@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 13:27:10 by danfern3          #+#    #+#             */
-/*   Updated: 2025/10/28 14:55:00 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/10/29 16:24:04 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@
 // ! DEBUGGING/TESTING MAIN
 int	main(void)
 {
+	// read_map("./files/bad_extension.berro");
+	// read_map("./files/border_error.ber");
+	// read_map("./files/collectable_number_error.ber");
+	// read_map("./files/exit_number_error.ber");
+	// read_map("./files/invalid_char_error.ber");
+	// read_map("./files/player_number_error.ber");
 	read_map("./files/test.ber");
 	return (0);
 }

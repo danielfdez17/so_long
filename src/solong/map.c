@@ -7,9 +7,14 @@ void	print_list(t_list *list)
 {
 	// TODO: DELETE
 	ft_putendl_fd(__func__, 1);
+	if (!list)
+	{
+		printf("---MISSING LIST---\n");
+		return ;
+	}
 	while (list)
 	{
-		ft_putstr_fd((const char *)list->content, 1);
+		ft_putendl_fd((const char *)list->content, 1);
 		list = list->next;
 	}
 	ft_putendl_fd("\n", 1);
@@ -117,10 +122,10 @@ static char	**duplicate_map(t_game *game)
 
 static t_bool	validate_ways(t_game *game, char **map, int x, int y)
 {
-	t_bool	up;
-	t_bool	down;
-	t_bool	right;
-	t_bool	left;
+	// t_bool	up;
+	// t_bool	down;
+	// t_bool	right;
+	// t_bool	left;
 	t_bool	path_is_valid;
 
 	// print_map(map, game->rows);
@@ -140,14 +145,19 @@ static t_bool	validate_ways(t_game *game, char **map, int x, int y)
 			game->exit_number--;
 		map[x][y] = 'V';
 		// printf(" -> New char: %c\n", map[x][y]);
-		return (1);
+		// return (1);
 	}
 	// else printf("\n");
-	up = validate_ways(game, map, x - 1, y);
-	down = validate_ways(game, map, x + 1, y);
-	right = validate_ways(game, map, x, y + 1);
-	left = validate_ways(game, map, x, y - 1);
-	path_is_valid = (game->collectable_number == 0 && game->exit_number == 0 && (up || down || right || left));
+	validate_ways(game, map, x - 1, y);
+	validate_ways(game, map, x + 1, y);
+	validate_ways(game, map, x, y + 1);
+	validate_ways(game, map, x, y - 1);
+	// up = validate_ways(game, map, x - 1, y);
+	// down = validate_ways(game, map, x + 1, y);
+	// right = validate_ways(game, map, x, y + 1);
+	// left = validate_ways(game, map, x, y - 1);
+	path_is_valid = (game->collectable_number == 0 && game->exit_number == 0);
+	// path_is_valid = (game->collectable_number == 0 && game->exit_number == 0 && (up || down || right || left));
 	return (path_is_valid);
 }
 
@@ -155,6 +165,7 @@ static t_bool	validate_ways(t_game *game, char **map, int x, int y)
 static t_bool	is_error(t_game *game)
 {
 	char	**map;
+	t_bool	valid_ways;
 	
 	if (game->player_number != 1)
 		return (PLAYER_NUMBER_ERROR);
@@ -163,7 +174,8 @@ static t_bool	is_error(t_game *game)
 	if (game->collectable_number < 1)
 		return (COLLECTABLE_NUMBER_ERROR);
 	map = duplicate_map(game);
-	if (!validate_ways(game, map, game->player_pos.x, game->player_pos.y))
+	valid_ways = validate_ways(game, map, game->player_pos.x, game->player_pos.y);
+	if (!valid_ways)
 	{
 		// printf("---DUPLICATED MAP---\n");
 		// print_map(map, game->rows);
@@ -200,7 +212,7 @@ t_bool	validate_map(t_game *game)
 		while (j < game->cols)
 		{
 			if (!is_valid_char(map[i][j]))
-				return (0);
+				return (INVALID_CHAR_ERROR);
 			if (is_border(game->rows, game->cols, i, j) && map[i][j] != '1')
 			{
 				// printf("i: %d, j: %d, char: %c (int: %d)\n", i, j, map[i][j], (int)map[i][j]);

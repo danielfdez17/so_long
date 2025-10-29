@@ -9,13 +9,13 @@
 # define INVALID_CHAR_ERROR -5
 # define FILE_EXTENSION_ERROR -6
 # define INVALID_PATH_ERROR -7
-# define PLAYER_NUMBER_MSG "Error: There must be exactly one player on the map.\n"
-# define EXIT_NUMBER_MSG "Error: There must be exactly one exit on the map.\n"
-# define COLLECTABLE_NUMBER_MSG "Error: There must be at least one collectable on the map.\n"
-# define BORDER_MSG "Error: The map must be surrounded by walls.\n"
+# define PLAYER_NUMBER_MSG "Error: There must be exactly one player ('E') on the map.\n"
+# define EXIT_NUMBER_MSG "Error: There must be exactly one exit ('E') on the map.\n"
+# define COLLECTABLE_NUMBER_MSG "Error: There must be at least one collectable ('C') on the map.\n"
+# define BORDER_MSG "Error: The map must be surrounded by walls ('1').\n"
 # define INVALID_CHAR_MSG "Error: The map contains invalid characters.\n"
 # define FILE_EXTENSION_MSG "Error: The map file must have a .ber extension.\n"
-# define INVALID_PATH_MSG "Error: The player should be able to collect every coin and exit.\n"
 # define MISSING_FILE_MSG "Error: No map file provided.\n"
+# define INVALID_PATH_MSG "Error: The player ('P') should be able to reach every collectable ('C') and the exit ('E').\n"
 
 #endif

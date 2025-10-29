@@ -23,7 +23,7 @@ NAME = so_long
 # Compilation
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-CFLAGS += -fsanitize=address
+# CFLAGS += -fsanitize=address
 # CFLAGS += -lm
 # CFLAGS += --no-print-directory
 
@@ -40,6 +40,7 @@ LIBFT = ./inc/libft/libft.a
 # Sources
 SRCS_DIR = ./src/solong/
 SRCS = \
+	error.c \
 	file.c \
 	game.c \
 	map.c \

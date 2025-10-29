@@ -61,6 +61,7 @@ void	read_map(char *filename)
 {
 	int		fd;
 	t_game *game;
+	t_bool	err;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
@@ -71,10 +72,12 @@ void	read_map(char *filename)
 	game = init_game();
 	if (!generate_list(fd, &game) || !generate_map(&game))
 		ft_putendl_fd("Error al generar el mapa", 2);
-	if (!validate_map(game))
+	err = validate_map(game);
+	if (err <= 0)
 	{
+		print_err_msg(err);
 		// print_map(game->map, game->rows);
-		ft_putendl_fd("El mapa no es valido", 2);
+		// ft_putendl_fd("El mapa no es valido", 2);
 	}
 	// print_map(game->map, game->rows);
 	close(fd);

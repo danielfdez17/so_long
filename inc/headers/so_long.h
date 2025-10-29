@@ -46,5 +46,7 @@ t_bool	generate_map(t_game **game);
 t_bool	validate_map(t_game *game);
 t_bool	free_map(char **map);
 
+// * Error
+void	print_err_msg(t_bool err);
 
 #endif

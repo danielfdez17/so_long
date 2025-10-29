@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 13:27:10 by danfern3          #+#    #+#             */
-/*   Updated: 2025/10/29 16:24:04 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/10/29 17:49:12 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,46 @@
 // 	return (0);
 // }
 
-// ! DEBUGGING/TESTING MAIN
-int	main(void)
+static void	ft_error(void)
 {
-	// read_map("./files/bad_extension.berro");
-	// read_map("./files/border_error.ber");
-	// read_map("./files/collectable_number_error.ber");
-	// read_map("./files/exit_number_error.ber");
-	// read_map("./files/invalid_char_error.ber");
-	// read_map("./files/player_number_error.ber");
-	read_map("./files/test.ber");
-	return (0);
+	fprintf(stderr, "%s", mlx_strerror(mlx_errno));
+	exit(EXIT_FAILURE);
 }
+
+static void	ft_hook(void *param)
+{
+	const	mlx_t* mlx = param;
+	printf("WIDTH: %d | HEIGHT: %d\n", mlx->width, mlx->height);
+}
+
+int32_t	main(void)
+{
+	mlx_set_setting(MLX_MAXIMIZED, true);
+	mlx_t	*mlx = mlx_init(WIDTH, HEIGHT, "42 MLX", true);
+	if (!mlx)
+		ft_error();
+
+	mlx_image_t	*img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
+		ft_error();
+
+	mlx_put_pixel(img, 0, 0, 0xFF0000FF);
+
+	mlx_loop_hook(mlx, ft_hook, mlx);
+	mlx_loop(mlx);
+	mlx_terminate(mlx);
+	return (EXIT_SUCCESS);
+}
+
+// ! DEBUGGING/TESTING MAIN
+// int	main(void)
+// {
+// 	// read_map("./files/bad_extension.berro");
+// 	// read_map("./files/border_error.ber");
+// 	// read_map("./files/collectable_number_error.ber");
+// 	// read_map("./files/exit_number_error.ber");
+// 	// read_map("./files/invalid_char_error.ber");
+// 	// read_map("./files/player_number_error.ber");
+//  read_map("./files/test.ber");
+// 	return (0);
+// }

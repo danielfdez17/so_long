@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 16:54:42 by danfern3          #+#    #+#             */
-/*   Updated: 2025/10/28 14:53:36 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/10/29 15:35:57 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*ft_till_endl(char *s)
 	while (s[new_size])
 	{
 		if (s[new_size] == '\n')
-			return (ft_substr_gnl(s, 0, new_size - 1));
+			return (ft_substr_gnl(s, 0, new_size));
 		++new_size;
 	}
 	return (ft_substr_gnl(s, 0, new_size));

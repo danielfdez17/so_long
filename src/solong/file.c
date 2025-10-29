@@ -73,9 +73,10 @@ void	read_map(char *filename)
 		ft_putendl_fd("Error al generar el mapa", 2);
 	if (!validate_map(game))
 	{
-		print_map(game->map, game->rows);
+		// print_map(game->map, game->rows);
 		ft_putendl_fd("El mapa no es valido", 2);
 	}
+	// print_map(game->map, game->rows);
 	close(fd);
 	free_game(game);
 }

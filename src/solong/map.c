@@ -22,6 +22,11 @@ void	print_map(char **map, int rows)
 	int	i;
 
 	ft_putendl_fd(__func__, 1);
+	if (!map)
+	{
+		printf("---MISSING MAP---\n");
+		return ;
+	}
 	i = 0;
 	while (i < rows)
 	{
@@ -69,7 +74,7 @@ t_bool	generate_map(t_game **game)
 		list = list->next;
 	}
 	map[i] = NULL;
-	print_map(map, (*game)->rows);
+	// print_map(map, (*game)->rows);
 	return (1);
 }
 
@@ -87,14 +92,84 @@ static t_bool	is_valid_char(char c)
 	return (c == WALL_CHAR || c == EMPTY_CHAR || c == EXIT_CHAR || c == PLAYER_CHAR || c == COLLECTABLE_CHAR);
 }
 
+static char	**duplicate_map(t_game *game)
+{
+	char	**dup;
+	int		i;
+
+	i = 0;
+	dup = malloc(sizeof(char *) * (game->rows + 1));
+	if (!dup)
+		return (NULL);
+	while (i < game->rows)
+	{
+		dup[i] = ft_strdup(game->map[i]);
+		if (!dup[i])
+		{
+			free_map(dup);
+			return (NULL);
+		}
+		i++;
+	}
+	dup[i] = NULL;
+	return (dup);
+}
+
+static t_bool	validate_ways(t_game *game, char **map, int x, int y)
+{
+	t_bool	up;
+	t_bool	down;
+	t_bool	right;
+	t_bool	left;
+	t_bool	path_is_valid;
+
+	// print_map(map, game->rows);
+	// return (1);
+	if (!map)
+		return (0);
+	if (x < 0 || x >= game->rows || y < 0 || y >= game->cols)
+		return (0);
+	if (map[x][y] == 'V' || map[x][y] == '1')
+		return (0);
+	// printf("Visiting (%d, %d): %c", x, y, map[x][y]);
+	if (map[x][y] == 'P' || map[x][y] == 'C' || map[x][y] == 'E' || map[x][y] == '0')
+	{
+		if (map[x][y] == 'C')
+			game->collectable_number--;
+		else if (map[x][y] == 'E')
+			game->exit_number--;
+		map[x][y] = 'V';
+		// printf(" -> New char: %c\n", map[x][y]);
+		return (1);
+	}
+	// else printf("\n");
+	up = validate_ways(game, map, x - 1, y);
+	down = validate_ways(game, map, x + 1, y);
+	right = validate_ways(game, map, x, y + 1);
+	left = validate_ways(game, map, x, y - 1);
+	path_is_valid = (game->collectable_number == 0 && game->exit_number == 0 && (up || down || right || left));
+	return (path_is_valid);
+}
+
+// ! IDEA: mapa de t_pos y añadir visited (para validar_camino) y char c (para saber qué caracter es)
 static t_bool	is_error(t_game *game)
 {
+	char	**map;
+	
 	if (game->player_number != 1)
 		return (PLAYER_NUMBER_ERROR);
 	if (game->exit_number != 1)
 		return (EXIT_NUMBER_ERROR);
 	if (game->collectable_number < 1)
 		return (COLLECTABLE_NUMBER_ERROR);
+	map = duplicate_map(game);
+	if (!validate_ways(game, map, game->player_pos.x, game->player_pos.y))
+	{
+		// printf("---DUPLICATED MAP---\n");
+		// print_map(map, game->rows);
+		free_map(map);
+		return (INVALID_PATH_ERROR);
+	}
 	return (1);
 }
 
@@ -133,7 +208,6 @@ t_bool	validate_map(t_game *game)
 			if (map[i][j] == 'P')
 			{
 				game->player_pos = char_found(i, j, &game->player_number);
-				// game->player_pos = init_pos(i, j);
 				// game->player_number++;
 			}
 			else if (map[i][j] == 'E')

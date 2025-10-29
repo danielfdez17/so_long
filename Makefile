@@ -23,7 +23,7 @@ NAME = so_long
 # Compilation
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-# CFLAGS += -fsanitize=address
+CFLAGS += -fsanitize=address
 # CFLAGS += -lm
 # CFLAGS += --no-print-directory
 

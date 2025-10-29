@@ -33,6 +33,8 @@ t_bool	free_map(char **map)
 {
 	int	i;
 
+	if (!map)
+		return (0);
 	i = 0;
 	while (map && map[i])
 		free(map[i++]);

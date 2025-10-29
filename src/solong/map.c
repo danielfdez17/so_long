@@ -170,6 +170,7 @@ static t_bool	is_error(t_game *game)
 		free_map(map);
 		return (INVALID_PATH_ERROR);
 	}
+	free_map(map);
 	return (1);
 }
 

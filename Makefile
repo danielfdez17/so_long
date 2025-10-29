@@ -6,7 +6,7 @@
 #    By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/26 13:24:06 by danfern3          #+#    #+#              #
-#    Updated: 2025/10/29 15:28:45 by danfern3         ###   ########.fr        #
+#    Updated: 2025/10/29 16:22:58 by danfern3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,8 +59,10 @@ SOURCES += $(GNL_APPEND)
 OBJS += $(addprefix $(OBJ_DIR), $(GNL_SRCS:.c=.o))
 
 # MLX42
-MLX42 = ./inc/MLX42/libmlx42.a
-MLX42_DIR = ./inc/MLX42
+LIBMLX = ./inc/MLX42
+INCLUDES += -I $(LIBMLX)/include
+LIBS = $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
+# MLX42 = ./inc/MLX42/libmlx42.a
 # CFLAGS += -I include
 # CFLAGS += -ldl
 # CFLAGS += -lglfw
@@ -82,7 +84,7 @@ $(OBJ_DIR)%.o:$(GNL_DIR)%.c
 
 # TODO: add MLX42 library
 $(NAME)	: $(OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME)
 	@echo "${LWHITE}$(NAME) ${LGREEN}✓$(RESET)"
 	@echo "${GREY}Compilation ${GREEN}[OK]$(RESET)"
 
@@ -90,10 +92,10 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) bonus
 	@echo "${GREY}Compiling libft ${GREEN}[OK]$(RESET)"
 
-# $(MLX42):
-# 	@$(MAKE) -C $(MLX42_DIR)
+all: clearscreen libmlx obj $(NAME)
 
-all: clearscreen obj $(NAME)
+libmlx: clearscreen
+	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 obj:
 	@mkdir -p $(OBJ_DIR)
@@ -101,6 +103,7 @@ obj:
 clean:
 	@$(RM) $(OBJS)
 	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(RM) $(LIBMLX)/build
 	@echo "${LWHITE}Cleaning $(NAME)... ${LGREEN}✓$(RESET)"
 
 fclean: clean
@@ -122,4 +125,4 @@ debug: all
 	clear
 	gdb ./$(NAME)
 
-.PHONY: all obj clean fclean re clearscreen run valgrind debug
+.PHONY: all libmlx obj clean fclean re clearscreen run valgrind debug

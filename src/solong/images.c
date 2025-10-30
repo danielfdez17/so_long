@@ -39,7 +39,7 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 	{
 		puts("Escape key pressed!");
 		sleep(1);
-		exit(EXIT_SUCCESS);
+		// mlx_close_window(mlx);
 	}
 }
 
@@ -48,7 +48,7 @@ int32_t	main(void)
 	// Start mlx
 	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "Test", true);
 	if (!mlx)
-        error();
+		error();
 
 	// Create a new image
 	mlx_image_t* img = mlx_new_image(mlx, 512, 512);
@@ -60,17 +60,10 @@ int32_t	main(void)
 
 	// Display an instance of the image
 	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
-        error();
+		error();
 
 	mlx_key_hook(mlx, &my_keyhook, img);
 	mlx_loop(mlx);
-
-	while (1)
-	{
-		img->instances[0].x += 5;
-		img->instances[0].y += 5;
-		sleep(3);
-	}
 
 	// Optional, terminate will clean up any leftovers, this is just to demonstrate.
 	mlx_delete_image(mlx, img);

@@ -4,12 +4,6 @@
 
 
 #include <unistd.h>
-#ifndef WIDTH
-#define WIDTH 512
-#endif
-#ifndef HEIGHT
-#define HEIGHT 512
-#endif
 
 static void error(void)
 {
@@ -26,7 +20,7 @@ int32_t	main(void)
         error();
 
 	// Try to load the file
-	mlx_texture_t* texture = mlx_load_png("./src/solong/temp.png");
+	mlx_texture_t* texture = mlx_load_png("./images/0_grass.png");
 	if (!texture)
         error();
 	

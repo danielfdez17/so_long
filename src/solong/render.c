@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_control.c                                      :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/30 15:39:25 by danfern3          #+#    #+#             */
-/*   Updated: 2025/10/30 18:21:20 by danfern3         ###   ########.fr       */
+/*   Created: 2025/10/30 17:59:55 by danfern3          #+#    #+#             */
+/*   Updated: 2025/10/30 18:21:36 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../../inc/headers/so_long.h"
 
-
-void	my_keyhook(mlx_key_data_t keydata, void *param)
+// Exit the program as failure.
+static void ft_error(void)
 {
-	(void)param;
+	fprintf(stderr, "%s", mlx_strerror(mlx_errno));
+	exit(EXIT_FAILURE);
+}
+
+void	my_key_hook(mlx_key_data_t keydata, void *param)
+{
+	mlx_t	*mlx;
+
+	mlx = (mlx_t *)param;
 	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
 		puts("W key pressed!");
 	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
@@ -36,18 +45,24 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 	{
 		puts("Escape key pressed!");
 		sleep(1);
-		exit(EXIT_SUCCESS);
+		mlx_close_window(mlx);
 	}
 }
 
 int32_t	main(void)
 {
-	mlx_t* mlx;
+	// mlx_set_setting(MLX_MAXIMIZED, true);
+	mlx_t	*mlx = mlx_init(WIDTH, HEIGHT, "42 MLX", true);
+	if (!mlx)
+		ft_error();
 
-	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
-		return (EXIT_FAILURE);
+	// mlx_image_t	*img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	// if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
+	// 	ft_error();
 
-	mlx_key_hook(mlx, &my_keyhook, NULL);
+	// mlx_put_pixel(img, 0, 0, 0xFF0000FF);
+
+	mlx_key_hook(mlx, &my_key_hook, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);

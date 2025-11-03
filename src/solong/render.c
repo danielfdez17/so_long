@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:59:55 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/03 09:05:08 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/03 13:48:44 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	close_window(t_game *game)
 {
-	mlx_terminate(game->mlx);
+	mlx_close_window(game->mlx);
 }
 
 void	my_keyhook(mlx_key_data_t keydata, void *param)
@@ -47,7 +47,6 @@ int32_t	render_game(t_game *game)
 	if (!game->mlx)
 		return (EXIT_FAILURE);
 	mlx_key_hook(game->mlx, &my_keyhook, game);
-	// if (game->mlx)
 	mlx_loop(game->mlx);
 	return (EXIT_SUCCESS);
 }

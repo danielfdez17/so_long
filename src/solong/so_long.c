@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 13:27:10 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/03 08:25:54 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/03 08:51:07 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,16 @@ static t_bool	check_file_extension(char **av)
 
 int main(int ac, char **av)
 {
+	t_game	*game;
+	int		result;
+
 	(void)ac;
 	if (!check_file_extension(av))
 		return (0);
-	read_map(av[1]);
-	return (0);
+	game = read_map(av[1]);
+	result = render_game(game);
+	free_game(game);
+	return (result);
 }
 
 // ! DEBUGGING/TESTING MAIN

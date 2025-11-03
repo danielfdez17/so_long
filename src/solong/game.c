@@ -26,6 +26,7 @@ t_game	*init_game()
 	game->collectable_number = 0;
 	game->rows = 0;
 	game->cols = 0;
+	game->mlx = NULL;
 	return (game);
 }
 
@@ -44,7 +45,12 @@ t_bool	free_map(char **map)
 
 void	free_game(t_game *game)
 {
-	free_map(game->map);
-	ft_lstclear(&game->list, free);
-	free(game);
+	if (game)
+	{
+		free_map(game->map);
+		ft_lstclear(&game->list, free);
+		if (game->mlx)
+			mlx_terminate(game->mlx);
+		free(game);
+	}
 }

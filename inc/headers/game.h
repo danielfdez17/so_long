@@ -3,6 +3,8 @@
 #ifndef GAME_H
 # define GAME_H
 
+# include "../MLX42/include/MLX42/MLX42.h"
+
 # define PLAYER_CHAR 'P'
 # define EXIT_CHAR 'E'
 # define COLLECTABLE_CHAR 'C'
@@ -26,6 +28,7 @@ typedef struct s_game
 	int		collectable_number;
 	int		rows;
 	int		cols;
+	mlx_t	*mlx;
 } t_game;
 
 #endif

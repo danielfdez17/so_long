@@ -57,7 +57,7 @@ t_bool	generate_list(int fd, t_game **game)
 	return (res);
 }
 
-void	read_map(char *filename)
+t_game	*read_map(char *filename)
 {
 	int		fd;
 	t_game *game;
@@ -67,7 +67,7 @@ void	read_map(char *filename)
 	if (fd == -1)
 	{
 		ft_putendl_fd("Error al abrir el archivo", 2);
-		return ;
+		return (NULL);
 	}
 	game = init_game();
 	if (!generate_list(fd, &game) || !generate_map(&game))
@@ -81,5 +81,5 @@ void	read_map(char *filename)
 	}
 	// print_map(game->map, game->rows);
 	close(fd);
-	free_game(game);
+	return (game);
 }

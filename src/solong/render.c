@@ -6,12 +6,51 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:59:55 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/03 07:59:16 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:05:08 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../inc/headers/so_long.h"
+
+void	close_window(t_game *game)
+{
+	mlx_terminate(game->mlx);
+}
+
+void	my_keyhook(mlx_key_data_t keydata, void *param)
+{
+	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
+		puts("W key pressed!");
+	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
+		puts("A key pressed!");
+	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
+		puts("S key pressed!");
+	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
+		puts("D key pressed!");
+	if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
+		puts("Up key pressed!");
+	if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS)
+		puts("Left key pressed!");
+	if (keydata.key == MLX_KEY_DOWN && keydata.action == MLX_PRESS)
+		puts("Down key pressed!");
+	if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
+		puts("Right key pressed!");
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+		close_window(param);
+}
+
+int32_t	render_game(t_game *game)
+{
+	(void)game;
+	game->mlx = mlx_init(WIDTH, HEIGHT, "SO LOOOOOOOOOONG", true);
+	if (!game->mlx)
+		return (EXIT_FAILURE);
+	mlx_key_hook(game->mlx, &my_keyhook, game);
+	// if (game->mlx)
+	mlx_loop(game->mlx);
+	return (EXIT_SUCCESS);
+}
 
 // Exit the program as failure.
 // static void ft_error(void)

@@ -12,7 +12,7 @@
 // 	exit(EXIT_FAILURE);
 // }
 
-// void	my_keyhook(mlx_key_data_t keydata, void *param)
+// static void	my_keyhook(mlx_key_data_t keydata, void *param)
 // {
 // 	mlx_image_t	*img = (mlx_image_t *)param;
 // 	if ((keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_UP) && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))

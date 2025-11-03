@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:59:55 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/03 13:48:44 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/03 14:06:46 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,31 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 		close_window(param);
 }
 
+static void error(void)
+{
+	sleep(4);
+	puts(mlx_strerror(mlx_errno));
+	exit(EXIT_FAILURE);
+}
+
 int32_t	render_game(t_game *game)
 {
-	(void)game;
 	game->mlx = mlx_init(WIDTH, HEIGHT, "SO LOOOOOOOOOONG", true);
 	if (!game->mlx)
 		return (EXIT_FAILURE);
+
+	mlx_texture_t	*texture = mlx_load_png("./images/0_grass.png");
+	if (!texture)
+		error();
+
+	mlx_image_t	*img = mlx_texture_to_image(game->mlx, texture);
+	if (!img)
+		error();
+	
 	mlx_key_hook(game->mlx, &my_keyhook, game);
 	mlx_loop(game->mlx);
+	mlx_delete_image(game->mlx, img);
+	mlx_delete_texture(texture);
 	return (EXIT_SUCCESS);
 }
 

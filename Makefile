@@ -6,7 +6,7 @@
 #    By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/26 13:24:06 by danfern3          #+#    #+#              #
-#    Updated: 2025/10/30 18:33:30 by danfern3         ###   ########.fr        #
+#    Updated: 2025/11/03 07:58:08 by danfern3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,13 +39,7 @@ LIBFT = ./inc/libft/libft.a
 
 # Sources
 SRCS_DIR = ./src/solong/
-SRCS = \
-	error.c \
-	file.c \
-	game.c \
-	map.c \
-	render.c \
-	so_long.c
+SRCS = $(shell ls $(SRCS_DIR) -R | grep -E ".+\.c")
 SOURCES = $(addprefix $(SRCS_DIR), $(SRCS))
 OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 

@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:59:55 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/04 12:05:32 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/04 12:21:27 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,29 @@ static t_bool	is_valid_ceil(t_game *game, t_pos new_pos)
 	return (true);
 }
 
+static void check_rendered_img(t_game *game)
+{
+	if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
+		error();
+	game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
+	if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
+		error();
+	mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
+	if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
+		error();
+}
+
+static void	replace_img(t_game *game, t_pos new_pos)
+{
+	free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
+	render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], EMPTY_CHAR, game->player_pos);
+	check_rendered_img(game);
+	game->player_pos = init_pos(new_pos.x, new_pos.y);
+	free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
+	render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], PLAYER_CHAR, game->player_pos);
+	check_rendered_img(game);
+}
+
 void	my_keyhook(mlx_key_data_t keydata, void *param)
 {
 	t_game	*game;
@@ -74,27 +97,7 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 	{
 		if (is_valid_ceil(game, init_pos(game->player_pos.x - 1, game->player_pos.y)))
 		{
-			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
-			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], EMPTY_CHAR, game->player_pos);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
-				error();
-			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
-				error();
-			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
-			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
-				error();
-			game->player_pos.x--;
-			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
-			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], PLAYER_CHAR, game->player_pos);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
-				error();
-			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
-				error();
-			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
-			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
-				error();
+			replace_img(game, init_pos(game->player_pos.x - 1, game->player_pos.y));
 			// printf("(%d, %d) -> ", game->player_pos.x--, game->player_pos.y);	
 			// printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
 		}
@@ -103,27 +106,7 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 	{
 		if (is_valid_ceil(game, init_pos(game->player_pos.x, game->player_pos.y - 1)))
 		{
-			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
-			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], EMPTY_CHAR, game->player_pos);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
-				error();
-			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
-				error();
-			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
-			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
-				error();
-			game->player_pos.y--;
-			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
-			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], PLAYER_CHAR, game->player_pos);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
-				error();
-			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
-				error();
-			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
-			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
-				error();
+			replace_img(game, init_pos(game->player_pos.x, game->player_pos.y - 1));
 			// printf("(%d, %d) -> ", game->player_pos.x, game->player_pos.y--);	
 			// printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
 		}
@@ -132,27 +115,7 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 	{
 		if (is_valid_ceil(game, init_pos(game->player_pos.x + 1, game->player_pos.y)))
 		{
-			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
-			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], EMPTY_CHAR, game->player_pos);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
-				error();
-			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
-				error();
-			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
-			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
-				error();
-			game->player_pos.x++;
-			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
-			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], PLAYER_CHAR, game->player_pos);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
-				error();
-			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
-				error();
-			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
-			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
-				error();
+			replace_img(game, init_pos(game->player_pos.x + 1, game->player_pos.y));
 			// printf("(%d, %d) -> ", game->player_pos.x++, game->player_pos.y);	
 			// printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
 		}
@@ -161,27 +124,7 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 	{
 		if (is_valid_ceil(game, init_pos(game->player_pos.x, game->player_pos.y + 1)))
 		{
-			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
-			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], EMPTY_CHAR, game->player_pos);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
-				error();
-			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
-				error();
-			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
-			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
-				error();
-			game->player_pos.y++;
-			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
-			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], PLAYER_CHAR, game->player_pos);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
-				error();
-			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
-			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
-				error();
-			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
-			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
-				error();
+			replace_img(game, init_pos(game->player_pos.x, game->player_pos.y + 1));
 			// printf("(%d, %d) -> ", game->player_pos.x, game->player_pos.y++);	
 			// printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
 		}	

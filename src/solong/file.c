@@ -72,7 +72,9 @@ t_game	*read_map(char *filename)
 	game = init_game();
 	if (!generate_list(fd, &game) || !generate_map(&game))
 		ft_putendl_fd("Error al generar el mapa", 2);
-	err = validate_map(game);
+	print_game(game);
+	err = validate_map(&game);
+	print_game(game);
 	close(fd);
 	if (err <= 0)
 	{

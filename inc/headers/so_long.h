@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 08:12:45 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/04 09:18:08 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:25:32 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,15 @@ t_bool		generate_list(int fd, t_game **game);
 // * GAME
 // ! No need to allocate memory for a t_game variable (alike t_pos)
 t_game		*init_game();
+void	copy_game(t_game *copy, t_game *game);
+void	print_game(t_game *game);
 t_pos		init_pos(int x, int y);
 void		free_game(t_game *game);
 int32_t		render_game(t_game *game);
 
 // * MAP
 t_bool		generate_map(t_game **game);
-t_bool		validate_map(t_game *game);
+t_bool		validate_map(t_game **game);
 void	free_single_texture(mlx_t *mlx, t_tex_img *tex_img);
 t_bool		free_map(char **map);
 

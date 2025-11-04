@@ -164,8 +164,8 @@ static t_bool	validate_ways(t_game *game, char **map, int x, int y)
 // ! IDEA: mapa de t_pos y añadir visited (para validar_camino) y char c (para saber qué caracter es)
 static t_bool	is_error(t_game *game)
 {
-	char	**map;
 	t_bool	valid_ways;
+	t_game	*g;
 	
 	if (game->player_number != 1)
 		return (PLAYER_NUMBER_ERROR);
@@ -173,67 +173,71 @@ static t_bool	is_error(t_game *game)
 		return (EXIT_NUMBER_ERROR);
 	if (game->collectable_number < 1)
 		return (COLLECTABLE_NUMBER_ERROR);
-	map = duplicate_map(game);
-	valid_ways = validate_ways(game, map, game->player_pos.x, game->player_pos.y);
+	g = init_game();
+	g->map = duplicate_map(game);
+	copy_game(g, game);
+	valid_ways = validate_ways(g, g->map, g->player_pos.x, g->player_pos.y);
 	if (!valid_ways)
 	{
 		// printf("---DUPLICATED MAP---\n");
 		// print_map(map, game->rows);
-		free_map(map);
+		free_game(g);
 		return (INVALID_PATH_ERROR);
 	}
-	free_map(map);
+	free_game(g);
 	return (1);
 }
 
 static t_pos char_found(int i, int j, int *number)
 {
-	t_pos	pos;
-
 	*number = *number + 1;
-	pos.x = i;
-	pos.y = j;
-	return (pos);
+	return (init_pos(i, j));
 }
 
 // ! IDEA: devolver un numero de error y asociarlo a un mensaje
-t_bool	validate_map(t_game *game)
+t_bool	validate_map(t_game **game)
 {
 	int		i;
 	int		j;
 	char	**map;
+	t_game	*g;
 
-	map = game->map;
+	g = *game;
+	map = g->map;
 	i = 0;
-	// printf("game->rows: %d, game->cols: %d\n", game->rows, game->cols);
-	while (i < game->rows)
+	// printf("g->rows: %d, g->cols: %d\n", g->rows, g->cols);
+	while (i < g->rows)
 	{
 		j = 0;
-		while (j < game->cols)
+		while (j < g->cols)
 		{
 			if (!is_valid_char(map[i][j]))
 				return (INVALID_CHAR_ERROR);
-			if (is_border(game->rows, game->cols, i, j) && map[i][j] != '1')
+			if (is_border(g->rows, g->cols, i, j) && map[i][j] != '1')
 			{
 				// printf("i: %d, j: %d, char: %c (int: %d)\n", i, j, map[i][j], (int)map[i][j]);
 				return (BORDER_ERROR);
 			}
-			if (map[i][j] == 'P')
+			if (map[i][j] == PLAYER_CHAR)
 			{
-				game->player_pos = char_found(i, j, &game->player_number);
-				// game->player_number++;
+				g->player_pos = char_found(i, j, &g->player_number);
+				// g->player_number++;
 			}
-			else if (map[i][j] == 'E')
+			else if (map[i][j] == EXIT_CHAR)
 			{
-				game->exit_pos = char_found(i, j, &game->exit_number);
-				// game->exit_pos = init_pos(i, j);
-				// game->exit_number++;
+				g->exit_pos = char_found(i, j, &g->exit_number);
+				// g->exit_pos = init_pos(i, j);
+				// g->exit_number++;
 			}
-			else if (map[i][j] == 'C')
-				game->collectable_number++;
+			else if (map[i][j] == COLLECTABLE_CHAR)
+			{
+				char_found(i, j, &g->collectable_number);
+				// g->collectable_number++;
+				// printf("%d\n", g->collectable_number);
+			}
 			j++;
 		}
 		i++;
 	}
-	return (is_error(game));
+	return (is_error(g));
 }

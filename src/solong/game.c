@@ -11,6 +11,13 @@ t_pos	init_pos(int x, int y)
 	return (pos);
 }
 
+void	print_game(t_game *game)
+{
+	printf("Player number: %d\n", game->player_number);
+	printf("collectable number: %d\n", game->collectable_number);
+	printf("exit number: %d\n", game->exit_number);
+}
+
 t_game	*init_game()
 {
 	t_game	*game;
@@ -24,12 +31,24 @@ t_game	*init_game()
 	game->player_number = 0;
 	game->exit_number = 0;
 	game->collectable_number = 0;
+	game->list = NULL;
 	game->rows = 0;
 	game->cols = 0;
 	game->mlx = NULL;
 	game->foreground = NULL;
 	game->background = NULL;
 	return (game);
+}
+
+void	copy_game(t_game *copy, t_game *game)
+{
+	copy->player_pos = init_pos(game->player_pos.x, game->player_pos.y);
+	copy->exit_pos = init_pos(game->exit_pos.x, game->exit_pos.y);
+	copy->player_number = game->player_number;
+	copy->exit_number = game->exit_number;
+	copy->collectable_number = game->collectable_number;
+	copy->rows = game->rows;
+	copy->cols = game->cols;
 }
 
 t_bool	free_map(char **map)
@@ -86,7 +105,8 @@ void	free_game(t_game *game)
 	if (game)
 	{
 		free_map(game->map);
-		ft_lstclear(&game->list, free);
+		if (game->list)
+			ft_lstclear(&game->list, free);
 		if (game->foreground)
 			free_textures(game);
 		if (game->mlx)

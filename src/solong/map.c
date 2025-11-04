@@ -79,6 +79,23 @@ t_bool	generate_map(t_game **game)
 		list = list->next;
 	}
 	map[i] = NULL;
+	// ! in other function
+	(*game)->tex_img = malloc(sizeof(t_tex_img *) * (*game)->rows);
+	if (!(*game)->tex_img)
+		return (false);
+	i = 0;
+	while (i < (*game)->rows)
+	{
+		(*game)->tex_img[i] = malloc(sizeof(t_tex_img) * (*game)->cols);
+		if (!(*game)->tex_img[i])
+		{
+			while (i--)
+				free((*game)->tex_img[i]);
+			free((*game)->tex_img);
+			return (0);
+		}
+		++i;
+	}
 	// print_map(map, (*game)->rows);
 	return (1);
 }

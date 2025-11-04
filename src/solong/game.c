@@ -43,6 +43,20 @@ t_bool	free_map(char **map)
 	return (0);
 }
 
+void	free_textures(t_game *game)
+{
+	for (int i = 0; i < game->rows; ++i)
+	{
+		for (int j = 0; j < game->cols; ++j)
+		{
+			mlx_delete_image(game->mlx, game->tex_img[i][j].img);
+			mlx_delete_texture(game->tex_img[i][j].texture);
+		}
+		free(game->tex_img[i]);
+	}
+	free(game->tex_img);
+}
+
 void	free_game(t_game *game)
 {
 	if (game)
@@ -51,6 +65,8 @@ void	free_game(t_game *game)
 		ft_lstclear(&game->list, free);
 		if (game->mlx)
 			mlx_terminate(game->mlx);
+		if (game->tex_img)
+			free_textures(game);
 		free(game);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:59:55 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/03 14:06:46 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/04 08:20:51 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,71 @@ static void error(void)
 	exit(EXIT_FAILURE);
 }
 
+static void	render_single_ceil(t_game *game, int i, int j)
+{
+	if (game->map[i][j] == '0')
+		game->tex_img[i][j].texture = mlx_load_png("./images/0_grass.png");
+	else if (game->map[i][j] == '1')
+		game->tex_img[i][j].texture = mlx_load_png("./images/1_bush.png");
+	else if (game->map[i][j] == 'P')
+		game->tex_img[i][j].texture = mlx_load_png("./images/P_witch_idle.png");
+	else if (game->map[i][j] == 'E')
+		game->tex_img[i][j].texture = mlx_load_png("./images/E_exit.png");
+	else
+		game->tex_img[i][j].texture = mlx_load_png("./images/C_mushroom.png");
+	if (!game->tex_img[i][j].texture)
+		error();
+	game->tex_img[i][j].img = mlx_texture_to_image(game->mlx, game->tex_img[i][j].texture);
+	if (!game->tex_img[i][j].img)
+		error();
+	mlx_resize_image(game->tex_img[i][j].img, IMG_WIDTH, IMG_HEIGHT);
+	if (mlx_image_to_window(game->mlx, game->tex_img[i][j].img, IMG_WIDTH * j, IMG_HEIGHT * i) < 0)
+		error();
+}
+
+static void	render_ceils(t_game *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < game->rows)
+	{
+		j = 0;
+		while (j < game->cols)
+		{
+			render_single_ceil(game, i, j);
+			++j;
+		}
+		++i;
+	}
+}
+
 int32_t	render_game(t_game *game)
 {
-	game->mlx = mlx_init(WIDTH, HEIGHT, "SO LOOOOOOOOOONG", true);
+	game->mlx = mlx_init(IMG_WIDTH * game->cols, IMG_HEIGHT * (game->rows + 1), "SO LOOOOOOOOOONG", true);
 	if (!game->mlx)
 		return (EXIT_FAILURE);
+	render_ceils(game);
+	mlx_key_hook(game->mlx, &my_keyhook, game);
+	mlx_loop(game->mlx);
+	return (EXIT_SUCCESS);
+}
 
-	mlx_texture_t	*texture = mlx_load_png("./images/0_grass.png");
+void	render_map(t_game *game)
+{
+	mlx_texture_t* texture = mlx_load_png("./images/0_grass.png");
 	if (!texture)
 		error();
 
-	mlx_image_t	*img = mlx_texture_to_image(game->mlx, texture);
+	mlx_image_t* img = mlx_texture_to_image(game->mlx, texture);
 	if (!img)
-		error();
+	error();
 	
-	mlx_key_hook(game->mlx, &my_keyhook, game);
-	mlx_loop(game->mlx);
-	mlx_delete_image(game->mlx, img);
-	mlx_delete_texture(texture);
-	return (EXIT_SUCCESS);
+	mlx_resize_image(img, 24, 24);
+
+	if (mlx_image_to_window(game->mlx, img, 0, 0) < 0)
+		error();
 }
 
 // Exit the program as failure.

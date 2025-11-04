@@ -10,6 +10,8 @@
 # define COLLECTABLE_CHAR 'C'
 # define WALL_CHAR '1'
 # define EMPTY_CHAR '0'
+# define IMG_WIDTH 64
+# define IMG_HEIGHT 64
 
 typedef struct s_pos
 {
@@ -17,18 +19,25 @@ typedef struct s_pos
 	int	y;
 } t_pos;
 
+typedef struct s_tex_img
+{
+	mlx_texture_t	*texture;
+	mlx_image_t		*img;
+} t_tex_img;
+
 typedef struct s_game
 {
-	char	**map;
-	t_pos	player_pos;
-	t_pos	exit_pos;
-	t_list	*list;
-	int		exit_number;
-	int		player_number;
-	int		collectable_number;
-	int		rows;
-	int		cols;
-	mlx_t	*mlx;
+	char		**map;
+	t_pos		player_pos;
+	t_pos		exit_pos;
+	t_list		*list;
+	int			exit_number;
+	int			player_number;
+	int			collectable_number;
+	int			rows;
+	int			cols;
+	mlx_t		*mlx;
+	t_tex_img	**tex_img;
 } t_game;
 
 #endif

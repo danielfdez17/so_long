@@ -10,8 +10,8 @@
 # define COLLECTABLE_CHAR 'C'
 # define WALL_CHAR '1'
 # define EMPTY_CHAR '0'
-# define IMG_WIDTH 64
-# define IMG_HEIGHT 64
+# define IMG_WIDTH 128
+# define IMG_HEIGHT 128
 
 typedef struct s_pos
 {

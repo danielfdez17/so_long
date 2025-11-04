@@ -48,40 +48,6 @@ void	print_map(char **map, int rows)
 // 	(*game)->rows = (*list)->content_size;
 // }
 
-static void	alloc_textures(t_game **game)
-{
-	int	i;
-
-	(*game)->tex_img = malloc(sizeof(t_tex_img *) * (*game)->rows);
-	if (!(*game)->tex_img)
-		return ;
-	i = 0;
-	while (i < (*game)->rows)
-	{
-		(*game)->tex_img[i] = malloc(sizeof(t_tex_img) * (*game)->cols);
-		if (!(*game)->tex_img[i])
-			return ;
-		++i;
-	}
-}
-
-static void	alloc_background(t_game **game)
-{
-	int	i;
-
-	(*game)->background = malloc(sizeof(t_tex_img *) * (*game)->rows);
-	if (!(*game)->background)
-		return ;
-	i = 0;
-	while (i < (*game)->rows)
-	{
-		(*game)->background[i] = malloc(sizeof(t_tex_img) * (*game)->cols);
-		if (!(*game)->background[i])
-			return ;
-		++i;
-	}
-}
-
 t_bool	generate_map(t_game **game)
 {
 	int	i;
@@ -113,8 +79,6 @@ t_bool	generate_map(t_game **game)
 		list = list->next;
 	}
 	map[i] = NULL;
-	alloc_textures(game);
-	alloc_background(game);
 	// print_map(map, (*game)->rows);
 	return (1);
 }

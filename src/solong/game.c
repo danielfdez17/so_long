@@ -27,6 +27,8 @@ t_game	*init_game()
 	game->rows = 0;
 	game->cols = 0;
 	game->mlx = NULL;
+	game->tex_img = NULL;
+	game->background = NULL;
 	return (game);
 }
 
@@ -45,6 +47,8 @@ t_bool	free_map(char **map)
 
 void	free_single_texture(mlx_t *mlx, t_tex_img *tex_img)
 {
+	if (!tex_img)
+		return ;
 	mlx_delete_image(mlx, tex_img->img);
 	mlx_delete_texture(tex_img->texture);
 }
@@ -54,6 +58,8 @@ void	free_textures(t_game *game)
 	int	j;
 
 	i = 0;
+	if (!game->mlx)
+		return ;
 	while (i < game->rows)
 	{
 		j = 0;
@@ -61,12 +67,14 @@ void	free_textures(t_game *game)
 		{
 			if (game->tex_img[i][j].img)
 				free_single_texture(game->mlx, &game->tex_img[i][j]);
-			if (game->background[i][j].img)
+			if (game->background[i][j].img && game->background[i][i].img)
 				free_single_texture(game->mlx, &game->background[i][j]);
 			++j;
 		}
-		free(game->tex_img[i]);
-		free(game->background[i]);
+		if (game->tex_img)
+			free(game->tex_img[i]);
+		if (game->background)
+			free(game->background[i]);
 		++i;
 	}
 	free(game->tex_img);

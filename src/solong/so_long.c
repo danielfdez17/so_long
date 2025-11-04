@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 13:27:10 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/04 11:32:44 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/04 13:28:35 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int main(int ac, char **av)
 	if (!check_file_extension(av))
 		return (0);
 	game = read_map(av[1]);
+	if (!game)
+		return (0);
 	result = render_game(game);
 	free_game(game);
 	return (result);

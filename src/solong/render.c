@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:59:55 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/04 11:52:24 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/04 12:05:32 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,35 +53,138 @@ static void render_image(mlx_t *mlx, t_tex_img *tex_img, char c, t_pos pos)
 
 }
 
+static t_bool	is_valid_ceil(t_game *game, t_pos new_pos)
+{
+	char	**map;
+
+	map = game->map;
+	
+	if (map[new_pos.x][new_pos.y] == WALL_CHAR)
+		return (false);
+	return (true);
+}
+
 void	my_keyhook(mlx_key_data_t keydata, void *param)
 {
 	t_game	*game;
 
 	game = (t_game *)param;
+	//todo: REUSABLE CODE SNIPPET
 	if ((keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_UP) && keydata.action == MLX_PRESS)
 	{
-		// free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
-		// render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], EMPTY_CHAR, game->player_pos);
-		// game->player_pos.x--;
-		// free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
-		// render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], PLAYER_CHAR, game->player_pos);
-		printf("(%d, %d) -> ", game->player_pos.x--, game->player_pos.y);	
-		printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
+		if (is_valid_ceil(game, init_pos(game->player_pos.x - 1, game->player_pos.y)))
+		{
+			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
+			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], EMPTY_CHAR, game->player_pos);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
+				error();
+			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
+				error();
+			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
+			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
+				error();
+			game->player_pos.x--;
+			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
+			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], PLAYER_CHAR, game->player_pos);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
+				error();
+			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
+				error();
+			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
+			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
+				error();
+			// printf("(%d, %d) -> ", game->player_pos.x--, game->player_pos.y);	
+			// printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
+		}
 	}
 	if ((keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_LEFT) && keydata.action == MLX_PRESS)
 	{
-		printf("(%d, %d) -> ", game->player_pos.x, game->player_pos.y--);	
-		printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
+		if (is_valid_ceil(game, init_pos(game->player_pos.x, game->player_pos.y - 1)))
+		{
+			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
+			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], EMPTY_CHAR, game->player_pos);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
+				error();
+			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
+				error();
+			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
+			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
+				error();
+			game->player_pos.y--;
+			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
+			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], PLAYER_CHAR, game->player_pos);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
+				error();
+			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
+				error();
+			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
+			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
+				error();
+			// printf("(%d, %d) -> ", game->player_pos.x, game->player_pos.y--);	
+			// printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
+		}
 	}
 	if ((keydata.key == MLX_KEY_S || keydata.key == MLX_KEY_DOWN) && keydata.action == MLX_PRESS)
 	{
-		printf("(%d, %d) -> ", game->player_pos.x++, game->player_pos.y);	
-		printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
+		if (is_valid_ceil(game, init_pos(game->player_pos.x + 1, game->player_pos.y)))
+		{
+			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
+			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], EMPTY_CHAR, game->player_pos);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
+				error();
+			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
+				error();
+			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
+			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
+				error();
+			game->player_pos.x++;
+			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
+			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], PLAYER_CHAR, game->player_pos);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
+				error();
+			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
+				error();
+			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
+			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
+				error();
+			// printf("(%d, %d) -> ", game->player_pos.x++, game->player_pos.y);	
+			// printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
+		}
 	}
 	if ((keydata.key == MLX_KEY_D || keydata.key == MLX_KEY_RIGHT) && keydata.action == MLX_PRESS)
 	{
-		printf("(%d, %d) -> ", game->player_pos.x, game->player_pos.y++);	
-		printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
+		if (is_valid_ceil(game, init_pos(game->player_pos.x, game->player_pos.y + 1)))
+		{
+			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
+			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], EMPTY_CHAR, game->player_pos);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
+				error();
+			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
+				error();
+			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
+			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
+				error();
+			game->player_pos.y++;
+			free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
+			render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], PLAYER_CHAR, game->player_pos);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
+				error();
+			game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
+			if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
+				error();
+			mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
+			if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
+				error();
+			// printf("(%d, %d) -> ", game->player_pos.x, game->player_pos.y++);	
+			// printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
+		}	
 	}
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		close_window(game);

@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:59:55 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/04 08:25:26 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/04 10:20:29 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,6 @@ void	close_window(t_game *game)
 	mlx_close_window(game->mlx);
 }
 
-void	my_keyhook(mlx_key_data_t keydata, void *param)
-{
-	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
-		puts("W key pressed!");
-	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
-		puts("A key pressed!");
-	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
-		puts("S key pressed!");
-	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
-		puts("D key pressed!");
-	if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
-		puts("Up key pressed!");
-	if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS)
-		puts("Left key pressed!");
-	if (keydata.key == MLX_KEY_DOWN && keydata.action == MLX_PRESS)
-		puts("Down key pressed!");
-	if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
-		puts("Right key pressed!");
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		close_window(param);
-}
-
 static void error(void)
 {
 	sleep(4);
@@ -47,26 +25,98 @@ static void error(void)
 	exit(EXIT_FAILURE);
 }
 
+
+static void render_image(mlx_t *mlx, t_tex_img *tex_img, char c, t_pos pos)
+{
+	if (c == PLAYER_CHAR)
+	{
+		tex_img->texture = mlx_load_png("./images/P_witch_idle.png");
+	}
+	else if (c == EXIT_CHAR)
+	{
+		tex_img->texture = mlx_load_png("./images/E_exit.png");
+	}
+	else if (c == COLLECTABLE_CHAR)
+	{
+		tex_img->texture = mlx_load_png("./images/C_mushroom.png");
+	}
+	else if (c == WALL_CHAR)
+	{
+		tex_img->texture = mlx_load_png("./images/1_bush.png");
+	}
+	// else if (c == EMPTY_CHAR)
+	else
+	{
+		tex_img->texture = mlx_load_png("./images/0_grass.png");
+	}
+	if (!tex_img->texture)
+		error();
+	tex_img->img = mlx_texture_to_image(mlx, tex_img->texture);
+	if (tex_img->img)
+		error();
+	mlx_resize_image(tex_img->img, IMG_WIDTH, IMG_HEIGHT);
+	if (mlx_image_to_window(mlx, tex_img->img, IMG_WIDTH * pos.y, IMG_HEIGHT * pos.x) < 0)
+		error();
+}
+
+void	my_keyhook(mlx_key_data_t keydata, void *param)
+{
+	t_game	*game;
+
+	game = (t_game *)param;
+	if ((keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_UP) && keydata.action == MLX_PRESS)
+	{
+		// free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
+		// render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], EMPTY_CHAR, game->player_pos);
+		// game->player_pos.x--;
+		// free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
+		// render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], PLAYER_CHAR, game->player_pos);
+		printf("(%d, %d) -> ", game->player_pos.x--, game->player_pos.y);	
+		printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
+	}
+	if ((keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_LEFT) && keydata.action == MLX_PRESS)
+	{
+		printf("(%d, %d) -> ", game->player_pos.x, game->player_pos.y--);	
+		printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
+	}
+	if ((keydata.key == MLX_KEY_S || keydata.key == MLX_KEY_DOWN) && keydata.action == MLX_PRESS)
+	{
+		printf("(%d, %d) -> ", game->player_pos.x++, game->player_pos.y);	
+		printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
+	}
+	if ((keydata.key == MLX_KEY_D || keydata.key == MLX_KEY_RIGHT) && keydata.action == MLX_PRESS)
+	{
+		printf("(%d, %d) -> ", game->player_pos.x, game->player_pos.y++);	
+		printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
+	}
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+		close_window(game);
+}
+
 static void	render_single_ceil(t_game *game, int i, int j)
 {
-	if (game->map[i][j] == '0')
-		game->tex_img[i][j].texture = mlx_load_png("./images/0_grass.png");
-	else if (game->map[i][j] == '1')
-		game->tex_img[i][j].texture = mlx_load_png("./images/1_bush.png");
-	else if (game->map[i][j] == 'P')
-		game->tex_img[i][j].texture = mlx_load_png("./images/P_witch_idle.png");
-	else if (game->map[i][j] == 'E')
-		game->tex_img[i][j].texture = mlx_load_png("./images/E_exit.png");
-	else
-		game->tex_img[i][j].texture = mlx_load_png("./images/C_mushroom.png");
-	if (!game->tex_img[i][j].texture)
-		error();
-	game->tex_img[i][j].img = mlx_texture_to_image(game->mlx, game->tex_img[i][j].texture);
-	if (!game->tex_img[i][j].img)
-		error();
-	mlx_resize_image(game->tex_img[i][j].img, IMG_WIDTH, IMG_HEIGHT);
-	if (mlx_image_to_window(game->mlx, game->tex_img[i][j].img, IMG_WIDTH * j, IMG_HEIGHT * i) < 0)
-		error();
+	t_pos	pos;
+
+	pos = init_pos(i, j);
+	render_image(game->mlx, &game->tex_img[i][j], game->map[i][j], pos);
+	// if (game->map[i][j] == '0')
+	// 	game->tex_img[i][j].texture = mlx_load_png("./images/0_grass.png");
+	// else if (game->map[i][j] == '1')
+	// 	game->tex_img[i][j].texture = mlx_load_png("./images/1_bush.png");
+	// else if (game->map[i][j] == 'P')
+	// 	game->tex_img[i][j].texture = mlx_load_png("./images/P_witch_idle.png");
+	// else if (game->map[i][j] == 'E')
+	// 	game->tex_img[i][j].texture = mlx_load_png("./images/E_exit.png");
+	// else
+	// 	game->tex_img[i][j].texture = mlx_load_png("./images/C_mushroom.png");
+	// if (!game->tex_img[i][j].texture)
+	// 	error();
+	// game->tex_img[i][j].img = mlx_texture_to_image(game->mlx, game->tex_img[i][j].texture);
+	// if (!game->tex_img[i][j].img)
+	// 	error();
+	// mlx_resize_image(game->tex_img[i][j].img, IMG_WIDTH, IMG_HEIGHT);
+	// if (mlx_image_to_window(game->mlx, game->tex_img[i][j].img, IMG_WIDTH * j, IMG_HEIGHT * i) < 0)
+	// 	error();
 }
 
 static void	render_ceils(t_game *game)

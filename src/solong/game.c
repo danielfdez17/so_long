@@ -43,6 +43,11 @@ t_bool	free_map(char **map)
 	return (0);
 }
 
+void	free_single_texture(mlx_t *mlx, t_tex_img *tex_img)
+{
+	mlx_delete_image(mlx, tex_img->img);
+	mlx_delete_texture(tex_img->texture);
+}
 void	free_textures(t_game *game)
 {
 	int	i;
@@ -55,10 +60,7 @@ void	free_textures(t_game *game)
 		while (j < game->cols)
 		{
 			if (game->tex_img[i][j].img)
-			{
-				mlx_delete_image(game->mlx, game->tex_img[i][j].img);
-				mlx_delete_texture(game->tex_img[i][j].texture);
-			}
+				free_single_texture(game->mlx, &game->tex_img[i][j]);
 			++j;
 		}
 		free(game->tex_img[i]);

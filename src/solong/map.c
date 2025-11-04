@@ -65,6 +65,23 @@ static void	alloc_textures(t_game **game)
 	}
 }
 
+static void	alloc_background(t_game **game)
+{
+	int	i;
+
+	(*game)->background = malloc(sizeof(t_tex_img *) * (*game)->rows);
+	if (!(*game)->background)
+		return ;
+	i = 0;
+	while (i < (*game)->rows)
+	{
+		(*game)->background[i] = malloc(sizeof(t_tex_img) * (*game)->cols);
+		if (!(*game)->background[i])
+			return ;
+		++i;
+	}
+}
+
 t_bool	generate_map(t_game **game)
 {
 	int	i;
@@ -97,6 +114,7 @@ t_bool	generate_map(t_game **game)
 	}
 	map[i] = NULL;
 	alloc_textures(game);
+	alloc_background(game);
 	// print_map(map, (*game)->rows);
 	return (1);
 }

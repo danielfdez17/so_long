@@ -61,12 +61,16 @@ void	free_textures(t_game *game)
 		{
 			if (game->tex_img[i][j].img)
 				free_single_texture(game->mlx, &game->tex_img[i][j]);
+			if (game->background[i][j].img)
+				free_single_texture(game->mlx, &game->background[i][j]);
 			++j;
 		}
 		free(game->tex_img[i]);
+		free(game->background[i]);
 		++i;
 	}
 	free(game->tex_img);
+	free(game->background);
 }
 
 void	free_game(t_game *game)

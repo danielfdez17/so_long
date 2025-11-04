@@ -38,6 +38,7 @@ typedef struct s_game
 	int			cols;
 	mlx_t		*mlx;
 	t_tex_img	**tex_img;
+	t_tex_img	**background;
 } t_game;
 
 #endif

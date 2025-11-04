@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:59:55 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/04 12:21:27 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/04 13:01:17 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ static t_bool	is_valid_ceil(t_game *game, t_pos new_pos)
 	return (true);
 }
 
+/**
+ * Checks if the new rendered image has been rendered correctly
+ */
 static void check_rendered_img(t_game *game)
 {
 	if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
@@ -76,6 +79,9 @@ static void check_rendered_img(t_game *game)
 		error();
 }
 
+/**
+ * Swaps the images to simulate player's movement
+ */
 static void	replace_img(t_game *game, t_pos new_pos)
 {
 	free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
@@ -87,58 +93,40 @@ static void	replace_img(t_game *game, t_pos new_pos)
 	check_rendered_img(game);
 }
 
+/**
+ * Custom keyhook to control pressed keys
+ */
 void	my_keyhook(mlx_key_data_t keydata, void *param)
 {
 	t_game	*game;
 
 	game = (t_game *)param;
-	//todo: REUSABLE CODE SNIPPET
-	if ((keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_UP) && keydata.action == MLX_PRESS)
-	{
-		if (is_valid_ceil(game, init_pos(game->player_pos.x - 1, game->player_pos.y)))
-		{
+	if ((keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_UP) 
+		&& keydata.action == MLX_PRESS 
+		&& is_valid_ceil(game, init_pos(game->player_pos.x - 1, game->player_pos.y)))
 			replace_img(game, init_pos(game->player_pos.x - 1, game->player_pos.y));
-			// printf("(%d, %d) -> ", game->player_pos.x--, game->player_pos.y);	
-			// printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
-		}
-	}
-	if ((keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_LEFT) && keydata.action == MLX_PRESS)
-	{
-		if (is_valid_ceil(game, init_pos(game->player_pos.x, game->player_pos.y - 1)))
-		{
+	if ((keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_LEFT) 
+		&& keydata.action == MLX_PRESS 
+		&& is_valid_ceil(game, init_pos(game->player_pos.x, game->player_pos.y - 1)))
 			replace_img(game, init_pos(game->player_pos.x, game->player_pos.y - 1));
-			// printf("(%d, %d) -> ", game->player_pos.x, game->player_pos.y--);	
-			// printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
-		}
-	}
-	if ((keydata.key == MLX_KEY_S || keydata.key == MLX_KEY_DOWN) && keydata.action == MLX_PRESS)
-	{
-		if (is_valid_ceil(game, init_pos(game->player_pos.x + 1, game->player_pos.y)))
-		{
+	if ((keydata.key == MLX_KEY_S || keydata.key == MLX_KEY_DOWN) 
+		&& keydata.action == MLX_PRESS 
+		&& is_valid_ceil(game, init_pos(game->player_pos.x + 1, game->player_pos.y)))
 			replace_img(game, init_pos(game->player_pos.x + 1, game->player_pos.y));
-			// printf("(%d, %d) -> ", game->player_pos.x++, game->player_pos.y);	
-			// printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
-		}
-	}
-	if ((keydata.key == MLX_KEY_D || keydata.key == MLX_KEY_RIGHT) && keydata.action == MLX_PRESS)
-	{
-		if (is_valid_ceil(game, init_pos(game->player_pos.x, game->player_pos.y + 1)))
-		{
+	if ((keydata.key == MLX_KEY_D || keydata.key == MLX_KEY_RIGHT) 
+		&& keydata.action == MLX_PRESS 
+		&& is_valid_ceil(game, init_pos(game->player_pos.x, game->player_pos.y + 1)))
 			replace_img(game, init_pos(game->player_pos.x, game->player_pos.y + 1));
-			// printf("(%d, %d) -> ", game->player_pos.x, game->player_pos.y++);	
-			// printf("(%d, %d)", game->player_pos.x, game->player_pos.y);	
-		}	
-	}
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		close_window(game);
 }
 
+/**
+ * 
+ */
 static void	render_single_ceil(t_game *game, int i, int j)
 {
-	t_pos	pos;
-
-	pos = init_pos(i, j);
-	render_image(game->mlx, &game->tex_img[i][j], game->map[i][j], pos);
+	render_image(game->mlx, &game->tex_img[i][j], game->map[i][j], init_pos(i, j));
 	if (!game->tex_img[i][j].texture)
 		error();
 	game->tex_img[i][j].img = mlx_texture_to_image(game->mlx, game->tex_img[i][j].texture);
@@ -146,6 +134,19 @@ static void	render_single_ceil(t_game *game, int i, int j)
 		error();
 	mlx_resize_image(game->tex_img[i][j].img, IMG_WIDTH, IMG_HEIGHT);
 	if (mlx_image_to_window(game->mlx, game->tex_img[i][j].img, IMG_WIDTH * j, IMG_HEIGHT * i) < 0)
+		error();
+}
+
+static void	render_background(t_game *game, int i, int j)
+{
+	render_image(game->mlx, &game->background[i][j], EMPTY_CHAR, init_pos(i, j));
+	if (!game->background[i][j].texture)
+		error();
+	game->background[i][j].img = mlx_texture_to_image(game->mlx, game->background[i][j].texture);
+	if (!game->background[i][j].img)
+		error();
+	mlx_resize_image(game->background[i][j].img, IMG_WIDTH, IMG_HEIGHT);
+	if (mlx_image_to_window(game->mlx, game->background[i][j].img, IMG_WIDTH * j, IMG_HEIGHT * i) < 0)
 		error();
 }
 
@@ -160,6 +161,7 @@ static void	render_ceils(t_game *game)
 		j = 0;
 		while (j < game->cols)
 		{
+			render_background(game, i, j);
 			render_single_ceil(game, i, j);
 			++j;
 		}

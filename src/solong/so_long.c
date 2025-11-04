@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 13:27:10 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/04 10:38:50 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/04 11:32:44 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,11 @@ int main(int ac, char **av)
 	t_game	*game;
 	int		result;
 
-	while (true)
-		malloc(sizeof(t_game *) * WIDTH);
 	(void)ac;
 	if (!check_file_extension(av))
 		return (0);
 	game = read_map(av[1]);
-	// result = render_game(game);
+	result = render_game(game);
 	free_game(game);
 	return (result);
 }

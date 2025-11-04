@@ -6,7 +6,7 @@
 #    By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/26 13:24:06 by danfern3          #+#    #+#              #
-#    Updated: 2025/11/03 13:46:29 by danfern3         ###   ########.fr        #
+#    Updated: 2025/11/04 08:33:32 by danfern3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,8 +110,10 @@ re: fclean all
 clearscreen:
 	clear
 
-run: all
+run1: all
 	./$(NAME) $(FILE)
+run2: all
+	./$(NAME) ./files/test2.ber
 
 valgrind: all
 	valgrind ./$(NAME) $(FILE)

@@ -45,14 +45,24 @@ t_bool	free_map(char **map)
 
 void	free_textures(t_game *game)
 {
-	for (int i = 0; i < game->rows; ++i)
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < game->rows)
 	{
-		for (int j = 0; j < game->cols; ++j)
+		j = 0;
+		while (j < game->cols)
 		{
-			mlx_delete_image(game->mlx, game->tex_img[i][j].img);
-			mlx_delete_texture(game->tex_img[i][j].texture);
+			if (game->tex_img[i][j].img)
+			{
+				mlx_delete_image(game->mlx, game->tex_img[i][j].img);
+				mlx_delete_texture(game->tex_img[i][j].texture);
+			}
+			++j;
 		}
 		free(game->tex_img[i]);
+		++i;
 	}
 	free(game->tex_img);
 }
@@ -63,10 +73,10 @@ void	free_game(t_game *game)
 	{
 		free_map(game->map);
 		ft_lstclear(&game->list, free);
-		if (game->mlx)
-			mlx_terminate(game->mlx);
 		if (game->tex_img)
 			free_textures(game);
+		if (game->mlx)
+			mlx_terminate(game->mlx);
 		free(game);
 	}
 }

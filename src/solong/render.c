@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:59:55 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/04 13:39:56 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/04 13:41:47 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ static t_bool	is_valid_ceil(t_game *game, t_pos new_pos)
  */
 static void check_rendered_img(t_game *game)
 {
-	if (!game->tex_img[game->player_pos.x][game->player_pos.y].texture)
+	if (!game->foreground[game->player_pos.x][game->player_pos.y].texture)
 		error();
-	game->tex_img[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].texture);
-	if (!game->tex_img[game->player_pos.x][game->player_pos.y].img)
+	game->foreground[game->player_pos.x][game->player_pos.y].img = mlx_texture_to_image(game->mlx, game->foreground[game->player_pos.x][game->player_pos.y].texture);
+	if (!game->foreground[game->player_pos.x][game->player_pos.y].img)
 		error();
-	mlx_resize_image(game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
-	if (mlx_image_to_window(game->mlx, game->tex_img[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
+	mlx_resize_image(game->foreground[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH, IMG_HEIGHT);
+	if (mlx_image_to_window(game->mlx, game->foreground[game->player_pos.x][game->player_pos.y].img, IMG_WIDTH * game->player_pos.y, IMG_HEIGHT * game->player_pos.x) < 0)
 		error();
 }
 
@@ -84,12 +84,12 @@ static void check_rendered_img(t_game *game)
  */
 static void	replace_img(t_game *game, t_pos new_pos)
 {
-	free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
-	render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], EMPTY_CHAR, game->player_pos);
+	free_single_texture(game->mlx, &game->foreground[game->player_pos.x][game->player_pos.y]);
+	render_image(game->mlx, &game->foreground[game->player_pos.x][game->player_pos.y], EMPTY_CHAR, game->player_pos);
 	check_rendered_img(game);
 	game->player_pos = init_pos(new_pos.x, new_pos.y);
-	free_single_texture(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y]);
-	render_image(game->mlx, &game->tex_img[game->player_pos.x][game->player_pos.y], PLAYER_CHAR, game->player_pos);
+	free_single_texture(game->mlx, &game->foreground[game->player_pos.x][game->player_pos.y]);
+	render_image(game->mlx, &game->foreground[game->player_pos.x][game->player_pos.y], PLAYER_CHAR, game->player_pos);
 	check_rendered_img(game);
 }
 
@@ -126,14 +126,14 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
  */
 static void	render_single_ceil(t_game *game, int i, int j)
 {
-	render_image(game->mlx, &game->tex_img[i][j], game->map[i][j], init_pos(i, j));
-	if (!game->tex_img[i][j].texture)
+	render_image(game->mlx, &game->foreground[i][j], game->map[i][j], init_pos(i, j));
+	if (!game->foreground[i][j].texture)
 		error();
-	game->tex_img[i][j].img = mlx_texture_to_image(game->mlx, game->tex_img[i][j].texture);
-	if (!game->tex_img[i][j].img)
+	game->foreground[i][j].img = mlx_texture_to_image(game->mlx, game->foreground[i][j].texture);
+	if (!game->foreground[i][j].img)
 		error();
-	mlx_resize_image(game->tex_img[i][j].img, IMG_WIDTH, IMG_HEIGHT);
-	if (mlx_image_to_window(game->mlx, game->tex_img[i][j].img, IMG_WIDTH * j, IMG_HEIGHT * i) < 0)
+	mlx_resize_image(game->foreground[i][j].img, IMG_WIDTH, IMG_HEIGHT);
+	if (mlx_image_to_window(game->mlx, game->foreground[i][j].img, IMG_WIDTH * j, IMG_HEIGHT * i) < 0)
 		error();
 }
 
@@ -174,14 +174,14 @@ static void	alloc_textures(t_game **game)
 {
 	int	i;
 
-	(*game)->tex_img = malloc(sizeof(t_tex_img *) * (*game)->rows);
-	if (!(*game)->tex_img)
+	(*game)->foreground = malloc(sizeof(t_tex_img *) * (*game)->rows);
+	if (!(*game)->foreground)
 		return ;
 	i = 0;
 	while (i < (*game)->rows)
 	{
-		(*game)->tex_img[i] = malloc(sizeof(t_tex_img) * (*game)->cols);
-		if (!(*game)->tex_img[i])
+		(*game)->foreground[i] = malloc(sizeof(t_tex_img) * (*game)->cols);
+		if (!(*game)->foreground[i])
 			return ;
 		++i;
 	}

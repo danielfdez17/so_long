@@ -6,7 +6,7 @@
 #    By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/26 13:24:06 by danfern3          #+#    #+#              #
-#    Updated: 2025/11/04 08:33:32 by danfern3         ###   ########.fr        #
+#    Updated: 2025/11/07 17:32:04 by danfern3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ NAME = so_long
 # Compilation
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-CFLAGS += -fsanitize=address
+# CFLAGS += -fsanitize=address
 # CFLAGS += -lm
 # CFLAGS += --no-print-directory
 
@@ -123,3 +123,6 @@ debug: all
 	gdb ./$(NAME)
 
 .PHONY: all libmlx obj clean fclean re clearscreen run valgrind debug
+
+# Indicates the main rule to be executed
+.GOAL: all

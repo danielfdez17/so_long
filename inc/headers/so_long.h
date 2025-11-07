@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 08:12:45 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/04 14:25:32 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/07 17:23:33 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@
 # ifndef HEIGHT
 #  define HEIGHT 512
 # endif
-# ifndef true
-#  define true 1
+# ifndef TRUE
+#  define TRUE 1
 # endif
-# ifndef false
-#  define false 0
+# ifndef FALSE
+#  define FALSE 0
 # endif
 
 typedef int	t_bool;
@@ -51,9 +51,8 @@ t_bool		generate_list(int fd, t_game **game);
 
 // * GAME
 // ! No need to allocate memory for a t_game variable (alike t_pos)
-t_game		*init_game();
+t_game		*init_game(void);
 void	copy_game(t_game *copy, t_game *game);
-void	print_game(t_game *game);
 t_pos		init_pos(int x, int y);
 void		free_game(t_game *game);
 int32_t		render_game(t_game *game);
@@ -66,5 +65,23 @@ t_bool		free_map(char **map);
 
 // * Error
 void		print_err_msg(t_bool err);
+
+// * Validation
+t_bool	is_error(t_game *game);
+t_bool	validate_ways(t_game *game, char **map, int x, int y);
+t_bool	validate_exit(t_game *game, char **map, int x, int y);
+t_bool	validate_map(t_game **game);
+t_pos	char_found(int i, int j, int *number);
+t_bool	is_valid_char(char c);
+t_bool	is_border(int rows, int cols, int x, int y);
+
+// * Window / Renderization
+void	render_ceils(t_game *game);
+void	my_keyhook(mlx_key_data_t keydata, void *param);
+void	replace_img(t_game *game, t_pos new_pos);
+void	render_image(t_tex_img *tex_img, char c);
+void	render_background(t_game *game, int i, int j);
+void	render_single_ceil(t_game *game, int i, int j);
+void	check_rendered_img(t_game *game);
 
 #endif

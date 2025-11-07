@@ -6,12 +6,16 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 13:27:10 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/04 13:28:35 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/07 14:57:46 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/headers/so_long.h"
 
+/**
+ * Checks if the file extension is correct.
+ * If not, it @returns FALSE
+ */
 static t_bool	check_file_extension(char **av)
 {
 	char	*file_ext;
@@ -19,18 +23,18 @@ static t_bool	check_file_extension(char **av)
 	if (!av || !av[1])
 	{
 		ft_putendl_fd(MISSING_FILE_MSG, 2);
-		return (false);
+		return (FALSE);
 	}
 	file_ext = ft_strrchr(av[1], '.');
 	if (!file_ext || ft_strncmp(file_ext, ".ber", 5) != 0)
 	{
 		ft_putendl_fd(FILE_EXTENSION_MSG, 2);
-		return (false);
+		return (FALSE);
 	}
-	return (true);
+	return (TRUE);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_game	*game;
 	int		result;
@@ -45,16 +49,3 @@ int main(int ac, char **av)
 	free_game(game);
 	return (result);
 }
-
-// ! DEBUGGING/TESTING MAIN
-// int	main(void)
-// {
-// 	// read_map("./files/bad_extension.berro");
-// 	// read_map("./files/border_error.ber");
-// 	// read_map("./files/collectable_number_error.ber");
-// 	// read_map("./files/exit_number_error.ber");
-// 	// read_map("./files/invalid_char_error.ber");
-// 	// read_map("./files/player_number_error.ber");
-//  read_map("./files/test.ber");
-// 	return (0);
-// }

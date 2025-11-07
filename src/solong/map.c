@@ -6,49 +6,11 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:45:01 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/07 14:45:03 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/07 17:46:13 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/headers/so_long.h"
-
-// // TODO: DELETE
-// void	print_list(t_list *list)
-// {
-// 	// TODO: DELETE
-// 	ft_putendl_fd(__func__, 1);
-// 	if (!list)
-// 	{
-// 		printf("---MISSING LIST---\n");
-// 		return ;
-// 	}
-// 	while (list)
-// 	{
-// 		ft_putendl_fd((const char *)list->content, 1);
-// 		list = list->next;
-// 	}
-// 	ft_putendl_fd("\n", 1);
-// }
-
-// // TODO: DELETE
-// void	print_map(char **map, int rows)
-// {
-// 	// TODO: DELETE
-// 	int	i;
-
-// 	ft_putendl_fd(__func__, 1);
-// 	if (!map)
-// 	{
-// 		printf("---MISSING MAP---\n");
-// 		return ;
-// 	}
-// 	i = 0;
-// 	while (i < rows)
-// 	{
-// 		ft_putendl_fd(map[i], 1);
-// 		i++;
-// 	}
-// }
 
 /**
  * Auxiliary function to reduce number of lines of generate_map function.

@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 12:59:28 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/07 17:21:24 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/07 17:48:09 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int32_t	render_game(t_game *game)
 	alloc_foreground(&game);
 	alloc_background(&game);
 	game->mlx = mlx_init(IMG_WIDTH * game->cols, IMG_HEIGHT * (game->rows), \
-		"SO LOOOOOOOOOONG", true);
+		GAME_NAME, true);
 	if (!game->mlx)
 		return (EXIT_FAILURE);
 	mlx_set_window_limit(game->mlx, IMG_WIDTH * game->cols, \

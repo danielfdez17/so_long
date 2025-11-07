@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 12:50:32 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/07 17:23:16 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/07 17:53:10 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_bool	is_valid_ceil(t_game **game, t_pos new_pos)
 	}
 	else if (map[new_pos.x][new_pos.y] == EXIT_CHAR)
 	{
-		if ((*game)->collectable_number != 0)
+		if ((*game)->collectable_number > 0)
 			return (FALSE);
 		else
 			mlx_close_window((*game)->mlx);

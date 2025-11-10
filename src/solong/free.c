@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 15:00:21 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/07 17:06:21 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/10 17:54:03 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	free_single_texture(mlx_t *mlx, t_tex_img *tex_img)
 	if (!tex_img)
 		return ;
 	mlx_delete_image(mlx, tex_img->img);
-	mlx_delete_texture(tex_img->texture);
+		mlx_delete_texture(tex_img->texture);
 }
 
 /**
@@ -81,6 +81,12 @@ void	free_game(t_game *game)
 		free_map(game->map);
 		if (game->list)
 			ft_lstclear(&game->list, free);
+		// if (game->movements)
+		// {
+		// 	// mlx_delete_image(game->mlx, game->movements);
+		// 	free(game->movements);
+		// }
+		// if (game->background && game->background[game->rows])
 		if (game->foreground)
 			free_textures(game);
 		if (game->mlx)

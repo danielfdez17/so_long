@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 12:59:28 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/07 17:48:09 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/10 17:57:08 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,28 @@ static void	alloc_background(t_game **game)
 			return ;
 		++i;
 	}
+	(*game)->movements = malloc(sizeof(mlx_image_t));
+	if (!(*game)->movements)
+		return ;
+}
+
+void	render_movs(t_game *game)
+{
+	(void)game;
+	char	*msg;
+
+	msg = ft_strjoin("Movements count: ", ft_itoa(game->movs));
+	if (!msg)
+		return ;
+	// if (game->background[game->rows]->img)
+	mlx_delete_image(game->mlx, game->background[game->rows]->img);
+	game->background[game->rows]->img = mlx_put_string(game->mlx, msg, 0, IMG_HEIGHT * game->rows);
+	free(msg);
+	if (!game->background[game->rows]->img)
+		return ;
+	// if (mlx_image_to_window(game->mlx, game->foreground[game->rows]->img, \
+	// 	IMG_WIDTH, IMG_HEIGHT) < 0)
+	// 	error();
 }
 
 /**
@@ -59,8 +81,8 @@ int32_t	render_game(t_game *game)
 {
 	alloc_foreground(&game);
 	alloc_background(&game);
-	game->mlx = mlx_init(IMG_WIDTH * game->cols, IMG_HEIGHT * (game->rows), \
-		GAME_NAME, true);
+	game->mlx = mlx_init(IMG_WIDTH * (game->cols), \
+		IMG_HEIGHT * (game->rows + 1), GAME_NAME, true);
 	if (!game->mlx)
 		return (EXIT_FAILURE);
 	mlx_set_window_limit(game->mlx, IMG_WIDTH * game->cols, \

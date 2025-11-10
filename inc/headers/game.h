@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 17:47:53 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/07 17:49:07 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/10 16:26:50 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_game
 	mlx_t			*mlx;
 	t_tex_img		**foreground;
 	t_tex_img		**background;
+	mlx_image_t		*movements;
 }	t_game;
 
 #endif

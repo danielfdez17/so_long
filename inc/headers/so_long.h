@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 08:12:45 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/07 17:50:07 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/14 09:09:25 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	free_single_texture(mlx_t *mlx, t_tex_img *tex_img);
 t_bool	free_map(char **map);
 
 // * Error
+void	*print_and_free(t_game	*game, int err);
 void	print_err_msg(t_bool err);
 
 // * Validation

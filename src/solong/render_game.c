@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 12:59:28 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/07 17:48:09 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/14 08:57:07 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int32_t	render_game(t_game *game)
 		return (EXIT_FAILURE);
 	mlx_set_window_limit(game->mlx, IMG_WIDTH * game->cols, \
 		IMG_HEIGHT * (game->rows), IMG_WIDTH * game->cols, \
-		IMG_HEIGHT * (game->rows + 1));
+		IMG_HEIGHT * (game->rows));
 	render_ceils(game);
 	mlx_key_hook(game->mlx, &my_keyhook, game);
 	mlx_loop(game->mlx);

@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 10:18:07 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/07 14:42:33 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/14 09:10:20 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_bool	generate_list(int fd, t_game **game)
 		ft_lstadd_back(&list, new_elem);
 		if (line && list->content_size != (int)ft_strlen(line))
 		{
-			free_list(list, &res);
+			res = 0;
 			break ;
 		}
 		line = get_next_line(fd, 0);
@@ -108,14 +108,10 @@ t_game	*read_map(char *filename)
 	}
 	game = init_game();
 	if (!generate_list(fd, &game) || !generate_map(&game))
-		ft_putendl_fd("Error when generating the map", 2);
+		return (print_and_free(game, LINE_NUMBER_ERROR));
 	err = validate_map(&game);
 	close(fd);
 	if (err <= 0)
-	{
-		print_err_msg(err);
-		free_game(game);
-		return (NULL);
-	}
+		return (print_and_free(game, err));
 	return (game);
 }

@@ -6,11 +6,18 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 10:17:56 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/07 10:18:00 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/14 09:12:27 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/headers/so_long.h"
+
+void	*print_and_free(t_game	*game, int err)
+{
+	print_err_msg(err);
+	free_game(game);
+	return (NULL);
+}
 
 void	print_err_msg(t_bool err)
 {
@@ -28,4 +35,6 @@ void	print_err_msg(t_bool err)
 		ft_putendl_fd(INVALID_PATH_MSG, 2);
 	else if (err == FILE_EXTENSION_ERROR)
 		ft_putendl_fd(FILE_EXTENSION_MSG, 2);
+	else if (err == LINE_NUMBER_ERROR)
+		ft_putendl_fd(LINE_NUMBER_MSG, 2);
 }

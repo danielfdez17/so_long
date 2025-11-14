@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 08:12:45 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/14 09:19:37 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/14 09:54:11 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void	render_background(t_game *game, int i, int j);
 void	render_single_ceil(t_game *game, int i, int j);
 void	check_rendered_img(t_game *game);
 void	render_movs(t_game *game);
+void	render_movs_line(t_game *game, int i, int j);
 
 #endif

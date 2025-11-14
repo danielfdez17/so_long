@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 12:50:32 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/10 17:52:45 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/14 09:54:31 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,11 @@ void	render_ceils(t_game *game)
 			++j;
 		}
 		++i;
+	}
+	j = 0;
+	while (j < game->cols)
+	{
+		render_movs_line(game, i, j);
+		++j;
 	}
 }

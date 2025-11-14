@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 11:30:51 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/10 16:21:36 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/14 10:02:38 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_game	*init_game(void)
 	game->mlx = NULL;
 	game->foreground = NULL;
 	game->background = NULL;
-	game->movements = NULL;
 	return (game);
 }
 

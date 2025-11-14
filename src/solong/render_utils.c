@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 12:50:32 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/14 09:54:31 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/14 10:48:38 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ void	replace_img(t_game *game, t_pos new_pos)
 	game->p_pos = init_pos(new_pos.x, new_pos.y);
 	game->movs++;
 	render_movs(game);
-	ft_putnbr_fd((int)game->movs, 0);
-	ft_putchar_fd('\n', 0);
 	free_single_texture(game->mlx, &game->foreground \
 		[game->p_pos.x][game->p_pos.y]);
 	render_image(&game->foreground \

@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 13:27:10 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/14 09:52:24 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/17 07:39:32 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ static t_bool	check_file_extension(char **av)
 
 	if (!av || !av[1])
 	{
-		ft_putendl_fd(MISSING_FILE_MSG, 2);
+		ft_putendl_fd(RED MISSING_FILE_MSG RESET, 2);
 		return (FALSE);
 	}
 	file_ext = ft_strrchr(av[1], '.');
 	if (!file_ext || ft_strncmp(file_ext, ".ber", 5) != 0)
 	{
-		ft_putendl_fd(FILE_EXTENSION_MSG, 2);
+		ft_putendl_fd(RED FILE_EXTENSION_MSG RESET, 2);
 		return (FALSE);
 	}
 	return (TRUE);

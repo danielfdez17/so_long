@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 08:12:45 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/14 09:54:11 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/17 07:37:58 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "../headers/get_next_line.h"
 # include "../headers/game.h"
 # include "../headers/error.h"
+# include "../headers/colors.h"
 # include "../MLX42/include/MLX42/MLX42.h"
 
 # ifndef WIDTH

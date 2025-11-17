@@ -6,7 +6,7 @@
 /*   By: danfern3 <danfern3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 10:18:07 by danfern3          #+#    #+#             */
-/*   Updated: 2025/11/14 09:10:20 by danfern3         ###   ########.fr       */
+/*   Updated: 2025/11/17 07:52:00 by danfern3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ t_game	*read_map(char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putendl_fd("Error when opening file", 2);
+		ft_putendl_fd(RED "Error when opening file" RESET, 2);
 		return (NULL);
 	}
 	game = init_game();

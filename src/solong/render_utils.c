@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/headers/so_long.h"
+#include "so_long.h"
 
 /**
  * Assigns the corresponding image to @param tex_img
@@ -33,13 +33,13 @@ void	render_image(t_tex_img *tex_img, char c)
  * Returns true if the new ceil is valid taking into account
  * the remaining collectables and the @param new_pos
  */
-t_bool	is_valid_ceil(t_game **game, t_pos new_pos)
+bool	is_valid_ceil(t_game **game, t_pos new_pos)
 {
 	char	**map;
 
 	map = (*game)->map;
 	if (map[new_pos.x][new_pos.y] == WALL_CHAR)
-		return (FALSE);
+		return (false);
 	if (map[new_pos.x][new_pos.y] == COLLECTABLE_CHAR)
 	{
 		(*game)->collectable_number--;
@@ -48,11 +48,11 @@ t_bool	is_valid_ceil(t_game **game, t_pos new_pos)
 	else if (map[new_pos.x][new_pos.y] == EXIT_CHAR)
 	{
 		if ((*game)->collectable_number > 0)
-			return (FALSE);
+			return (false);
 		else
 			mlx_close_window((*game)->mlx);
 	}
-	return (TRUE);
+	return (true);
 }
 
 /**
@@ -124,10 +124,10 @@ void	render_ceils(t_game *game)
 		}
 		++i;
 	}
-	j = 0;
-	while (j < game->cols)
-	{
-		render_movs_line(game, i, j);
-		++j;
-	}
+	// j = 0;
+	// while (j < game->cols)
+	// {
+	// 	render_movs_line(game, i, j);
+	// 	++j;
+	// }
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/headers/so_long.h"
+#include "so_long.h"
 
 void	*print_and_free(t_game	*game, int err)
 {
@@ -19,7 +19,7 @@ void	*print_and_free(t_game	*game, int err)
 	return (NULL);
 }
 
-void	print_err_msg(t_bool err)
+void	print_err_msg(int err)
 {
 	if (err == PLAYER_NUMBER_ERROR)
 		ft_putendl_fd(RED PLAYER_NUMBER_MSG RESET, 2);

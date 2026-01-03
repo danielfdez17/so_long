@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/headers/so_long.h"
+#include "so_long.h"
 
 /**
  * @returns true if the given char @param c
  * is a valid character except the wall ('1')
  */
-static t_bool	except_wall(char c)
+static bool	except_wall(char c)
 {
 	return (c == PLAYER_CHAR
 		|| c == COLLECTABLE_CHAR
@@ -27,7 +27,7 @@ static t_bool	except_wall(char c)
 /**
  * @returns true if the player can reach every collectable and the exit
  */
-t_bool	validate_ways(t_game *game, char **map, int x, int y)
+bool	validate_ways(t_game *game, char **map, int x, int y)
 {
 	if (!map)
 		return (0);
@@ -54,7 +54,7 @@ t_bool	validate_ways(t_game *game, char **map, int x, int y)
  * @returns true if the player can reach every collectable
  * considering the exit as a wall
  */
-t_bool	validate_exit(t_game *game, char **map, int x, int y)
+bool	validate_exit(t_game *game, char **map, int x, int y)
 {
 	if (!map)
 		return (0);
@@ -88,7 +88,7 @@ static void	update_chars(t_game *g, char **map, int i, int j)
 		char_found(i, j, &g->collectable_number);
 }
 
-t_bool	validate_map(t_game **game)
+bool	validate_map(t_game **game)
 /**
  * @returns true if the map is valid according to the statement rules
  */

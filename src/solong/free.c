@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/headers/so_long.h"
+#include "so_long.h"
 
-t_bool	free_map(char **map)
+bool	free_map(char **map)
 /**
  * Frees the memory allocated by the @param map
  */
@@ -50,7 +50,7 @@ void	free_textures(t_game *game)
 	i = 0;
 	if (!game->mlx)
 		return ;
-	while (i <= game->rows)
+	while (i < game->rows)
 	{
 		j = 0;
 		while (j < game->cols)

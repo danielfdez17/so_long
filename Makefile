@@ -17,12 +17,14 @@ GREY	= \033[1;31m
 LWHITE	= \033[2;37m
 LGREEN	= \033[2;32m
 
+NO_PRINT = --no-print-directory
+
 # Program name
 NAME = so_long
 
 # Compilation
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g3
 CFLAGS += -fsanitize=address
 
 # Removal
@@ -88,12 +90,12 @@ $(NAME)	: $(OBJS) $(LIBFT)
 	@echo "${GREY}Compilation ${GREEN}[OK]$(RESET)"
 
 $(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR) bonus
+	@$(MAKE) -C $(LIBFT_DIR) bonus $(NO_PRINT)
 	@echo "${GREY}Compiling libft ${GREEN}[OK]$(RESET)"
 
-all: clearscreen libmlx obj $(NAME)
+all: libmlx obj $(NAME)
 
-libmlx: clearscreen
+libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 obj:
@@ -101,24 +103,23 @@ obj:
 
 clean:
 	@$(RM) $(OBJS)
-	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(LIBFT_DIR) clean $(NO_PRINT)
 	@$(RM) $(LIBMLX)/build
 	@echo "${LWHITE}Cleaning $(NAME)... ${LGREEN}✓$(RESET)"
 
 fclean: clean
 	@$(RM) $(NAME)
-	$(MAKE) -C $(LIBFT_DIR) fclean
+	$(MAKE) -C $(LIBFT_DIR) fclean $(NO_PRINT)
 
 re: fclean all
 
-clearscreen:
-	clear
-
 # ! Automating / Debugging rules
-# run1: all
-# 	./$(NAME) $(FILE)
-# run2: all
-# 	./$(NAME) ./files/test2.ber
+run1: all
+	clear
+	./$(NAME) ./files/test.ber
+run2: all
+	clear
+	./$(NAME) ./files/test2.ber
 
 # valgrind: all
 # 	valgrind ./$(NAME) $(FILE)
@@ -127,7 +128,7 @@ clearscreen:
 # 	clear
 # 	gdb ./$(NAME)
 
-.PHONY: all libmlx obj clean fclean re clearscreen
+.PHONY: all libmlx obj clean fclean re run1 run2
 
 # Indicates the main rule to be executed
 .GOAL: all

@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/headers/so_long.h"
+#include "so_long.h"
 
 /**
  * Auxiliary function to reduce number of lines of generate_map function.
  * It just initializes the variables
  */
-static t_bool	init_variables(t_game **game, char ***map)
+static bool	init_variables(t_game **game, char ***map)
 {
 	if (!(*game)->list)
 		return (0);
@@ -32,7 +32,7 @@ static t_bool	init_variables(t_game **game, char ***map)
 /**
  * Creates the map stored in the field list of @param game
  */
-t_bool	generate_map(t_game **game)
+bool	generate_map(t_game **game)
 {
 	int		i;
 	int		line_size;

@@ -31,11 +31,11 @@ static bool	except_wall(char c)
 bool	validate_ways(t_game *game, char **map, int x, int y)
 {
 	if (!map)
-		return (0);
+		return (false);
 	if (x < 0 || x >= game->rows || y < 0 || y >= game->cols)
-		return (0);
+		return (false);
 	if (map[x][y] == 'V' || map[x][y] == WALL_CHAR)
-		return (0);
+		return (false);
 	if (except_wall(map[x][y]))
 	{
 		if (map[x][y] == COLLECTABLE_CHAR)
@@ -58,16 +58,11 @@ bool	validate_ways(t_game *game, char **map, int x, int y)
 bool	validate_exit(t_game *game, char **map, int x, int y)
 {
 	if (!map)
-		return (0);
+		return (false);
 	if (x < 0 || x >= game->rows || y < 0 || y >= game->cols)
-		return (0);
+		return (false);
 	if (map[x][y] == 'V' || map[x][y] == WALL_CHAR || map[x][y] == EXIT_CHAR
 		|| map[x][y] == GHOST_CHAR)
-		return (0);
-	// {
-	// 	if (map[x][y] == GHOST_CHAR)
-	// 		printf("Found ghost\n");
-	// }
 	if (except_wall(map[x][y]))
 	{
 		if (map[x][y] == COLLECTABLE_CHAR)
@@ -94,7 +89,7 @@ static void	update_chars(t_game *g, char **map, int i, int j)
 		char_found(i, j, &g->collectable_number);
 }
 
-bool	validate_map(t_game **game)
+int	validate_map(t_game **game)
 /**
  * @returns true if the map is valid according to the statement rules
  */

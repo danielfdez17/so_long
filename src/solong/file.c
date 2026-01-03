@@ -33,16 +33,16 @@ static void	clear_new_lines(char **s)
 /**
  * Auxiliary function to reduce numbers of lines of generate_list function.
  */
-static void	free_list(t_list *list, int *res)
+static void	free_list(t_list *list, bool *res)
 {
 	ft_lstclear(&list, free);
-	*res = 0;
+	*res = false;
 }
 
 /**
  * Auxiliary function to reduce numbers of lines of generate_list function.
  */
-static	t_list	*create_elem(char *line, t_list *list, int *res)
+static	t_list	*create_elem(char *line, t_list *list, bool *res)
 {
 	t_list	*elem;
 
@@ -64,10 +64,10 @@ bool	generate_list(int fd, t_game **game)
 {
 	char	*line;
 	t_list	*new_elem;
-	int		res;
+	bool	res;
 	t_list	*list;
 
-	res = 1;
+	res = true;
 	list = NULL;
 	line = get_next_line(fd, 0);
 	while (line)
@@ -79,7 +79,7 @@ bool	generate_list(int fd, t_game **game)
 		ft_lstadd_back(&list, new_elem);
 		if (line && list->content_size != (int)ft_strlen(line))
 		{
-			res = 0;
+			res = false;
 			break ;
 		}
 		line = get_next_line(fd, 0);
@@ -98,7 +98,7 @@ t_game	*read_map(char *filename)
 {
 	int		fd;
 	t_game	*game;
-	bool	err;
+	int		err;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
@@ -109,12 +109,6 @@ t_game	*read_map(char *filename)
 	game = init_game();
 	if (!generate_list(fd, &game) || !generate_map(&game))
 		return (print_and_free(game, LINE_NUMBER_ERROR));
-	t_list *aux = game->list;
-	while (aux)
-	{
-		printf("%s\n", (char *)aux->content);
-		aux = aux->next;
-	}
 	err = validate_map(&game);
 	close(fd);
 	if (err <= 0)

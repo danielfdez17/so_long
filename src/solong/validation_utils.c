@@ -79,7 +79,7 @@ static char	**duplicate_map(t_game *game)
  * @returns 1 if there is no error in the @param game.
  * Otherwise, @returns the corresponding error value
  */
-bool	is_error(t_game *game)
+int	is_error(t_game *game)
 {
 	bool	valid_ways;
 	bool	valid_exit;

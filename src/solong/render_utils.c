@@ -26,7 +26,7 @@ void	render_image(t_tex_img *tex_img, char c)
 	else if (c == EXIT_CHAR)
 		tex_img->texture = mlx_load_png("./images/E_exit_single.png");
 	else if (c == GHOST_CHAR)
-		tex_img->texture = mlx_load_png("./images/G_1.png");
+		tex_img->texture = mlx_load_png("./images/G_0.png");
 	else
 		tex_img->texture = mlx_load_png("./images/C_mushroom_single.png");
 }
@@ -54,6 +54,8 @@ bool	is_valid_ceil(t_game **game, t_pos new_pos)
 		else
 			mlx_close_window((*game)->mlx);
 	}
+	else if (map[new_pos.x][new_pos.y] == GHOST_CHAR)
+		mlx_close_window((*game)->mlx);
 	return (true);
 }
 
@@ -125,11 +127,5 @@ void	render_ceils(t_game *game)
 		}
 		++i;
 	}
-	// j = 0;
-	// while (j < game->cols)
-	// {
-	// 	render_movs_line(game, i, j);
-	// 	++j;
-	// }
 	render_movement_img(game);
 }

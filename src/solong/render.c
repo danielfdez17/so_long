@@ -15,7 +15,7 @@
 /**
  * Terminates the program when an error occurs
  */
-static void	error(void)
+void	error(void)
 {
 	sleep(4);
 	puts(mlx_strerror(mlx_errno));
@@ -42,24 +42,6 @@ void	check_rendered_img(t_game *game)
 		IMG_WIDTH * game->p_pos.y, IMG_HEIGHT * game->p_pos.x) < 0)
 		error();
 }
-
-/**
- * 
- */
-// void	render_movs_line(t_game *game, int i, int j)
-// {
-// 	render_image(&game->foreground[i][j], EMPTY_CHAR);
-// 	if (!game->foreground[i][j].texture)
-// 		error();
-// 	game->foreground[i][j].img
-// 		= mlx_texture_to_image(game->mlx, game->foreground[i][j].texture);
-// 	if (!game->foreground[i][j].img)
-// 		error();
-// 	mlx_resize_image(game->foreground[i][j].img, IMG_WIDTH, IMG_HEIGHT);
-// 	if (mlx_image_to_window(game->mlx, game->foreground[i][j].img,
-// 			IMG_WIDTH * j, IMG_HEIGHT * i) < 0)
-// 		error();
-// }
 
 void	render_movement_img(t_game *game)
 {

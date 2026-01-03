@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <stdbool.h>
+# include <sys/time.h>
 # include "../libft/libft.h"
 # include "../headers/get_next_line.h"
 # include "../headers/game.h"
@@ -29,6 +30,9 @@
 # endif
 # ifndef HEIGHT
 #  define HEIGHT 512
+# endif
+# ifndef MAX_SPRITES
+#  define MAX_SPRITES 9
 # endif
 
 // * FILES
@@ -51,6 +55,7 @@ bool	free_map(char **map);
 // * Error
 void	*print_and_free(t_game	*game, int err);
 void	print_err_msg(int err);
+void	error(void);
 
 // * Validation
 int		is_error(t_game *game);

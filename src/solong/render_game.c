@@ -35,22 +35,22 @@ static void	alloc_foreground(t_game **game)
 /**
  * Allocates memory for the background
  */
-static void	alloc_background(t_game **game)
-{
-	int	i;
+// static void	alloc_background(t_game **game)
+// {
+// 	int	i;
 
-	(*game)->background = malloc(sizeof(t_tex_img *) * ((*game)->rows + 1));
-	if (!(*game)->background)
-		return ;
-	i = 0;
-	while (i < (*game)->rows)
-	{
-		(*game)->background[i] = malloc(sizeof(t_tex_img) * (*game)->cols);
-		if (!(*game)->background[i])
-			return ;
-		++i;
-	}
-}
+// 	(*game)->background = malloc(sizeof(t_tex_img *) * ((*game)->rows + 1));
+// 	if (!(*game)->background)
+// 		return ;
+// 	i = 0;
+// 	while (i < (*game)->rows)
+// 	{
+// 		(*game)->background[i] = malloc(sizeof(t_tex_img) * (*game)->cols);
+// 		if (!(*game)->background[i])
+// 			return ;
+// 		++i;
+// 	}
+// }
 
 void	render_movs(t_game *game)
 {
@@ -65,7 +65,7 @@ void	render_movs(t_game *game)
 int32_t	render_game(t_game *game)
 {
 	alloc_foreground(&game);
-	alloc_background(&game);
+	// alloc_background(&game);
 	game->mlx = mlx_init(IMG_WIDTH * (game->cols),
 			IMG_HEIGHT * (game->rows), GAME_NAME, true);
 	if (!game->mlx)

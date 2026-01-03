@@ -48,7 +48,7 @@ void	check_rendered_img(t_game *game)
  */
 void	render_movs_line(t_game *game, int i, int j)
 {
-	render_background(game, i, j);
+	// render_background(game, i, j);
 	render_image(&game->foreground[i][j], EMPTY_CHAR);
 	if (!game->foreground[i][j].texture)
 		error();
@@ -83,17 +83,17 @@ void	render_single_ceil(t_game *game, int i, int j)
 /**
  * Renders the background with the grass image
  */
-void	render_background(t_game *game, int i, int j)
-{
-	render_image(&game->background[i][j], EMPTY_CHAR);
-	if (!game->background[i][j].texture)
-		error();
-	game->background[i][j].img = mlx_texture_to_image(game->mlx,
-			game->background[i][j].texture);
-	if (!game->background[i][j].img)
-		error();
-	mlx_resize_image(game->background[i][j].img, IMG_WIDTH, IMG_HEIGHT);
-	if (mlx_image_to_window(game->mlx, game->background[i][j].img,
-		IMG_WIDTH * j, IMG_HEIGHT * i) < 0)
-		error();
-}
+// void	render_background(t_game *game, int i, int j)
+// {
+// 	render_image(&game->background[i][j], EMPTY_CHAR);
+// 	if (!game->background[i][j].texture)
+// 		error();
+// 	game->background[i][j].img = mlx_texture_to_image(game->mlx,
+// 			game->background[i][j].texture);
+// 	if (!game->background[i][j].img)
+// 		error();
+// 	mlx_resize_image(game->background[i][j].img, IMG_WIDTH, IMG_HEIGHT);
+// 	if (mlx_image_to_window(game->mlx, game->background[i][j].img,
+// 		IMG_WIDTH * j, IMG_HEIGHT * i) < 0)
+// 		error();
+// }

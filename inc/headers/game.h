@@ -50,7 +50,7 @@ typedef struct s_game
 	unsigned int	movs;
 	mlx_t			*mlx;
 	t_tex_img		**foreground;
-	t_tex_img		**background;
+	// t_tex_img		**background;
 }	t_game;
 
 #endif

@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <stdbool.h>
 # include "../libft/libft.h"
 # include "../headers/get_next_line.h"
 # include "../headers/game.h"
@@ -29,18 +30,10 @@
 # ifndef HEIGHT
 #  define HEIGHT 512
 # endif
-# ifndef TRUE
-#  define TRUE 1
-# endif
-# ifndef FALSE
-#  define FALSE 0
-# endif
-
-typedef int	t_bool;
 
 // * FILES
 t_game	*read_map(char *filename);
-t_bool	generate_list(int fd, t_game **game);
+bool	generate_list(int fd, t_game **game);
 
 // * GAME
 t_game	*init_game(void);
@@ -50,23 +43,23 @@ void	free_game(t_game *game);
 int32_t	render_game(t_game *game);
 
 // * MAP
-t_bool	generate_map(t_game **game);
-t_bool	validate_map(t_game **game);
+bool	generate_map(t_game **game);
+bool	validate_map(t_game **game);
 void	free_single_texture(mlx_t *mlx, t_tex_img *tex_img);
-t_bool	free_map(char **map);
+bool	free_map(char **map);
 
 // * Error
 void	*print_and_free(t_game	*game, int err);
-void	print_err_msg(t_bool err);
+void	print_err_msg(int err);
 
 // * Validation
-t_bool	is_error(t_game *game);
-t_bool	validate_ways(t_game *game, char **map, int x, int y);
-t_bool	validate_exit(t_game *game, char **map, int x, int y);
-t_bool	validate_map(t_game **game);
+bool	is_error(t_game *game);
+bool	validate_ways(t_game *game, char **map, int x, int y);
+bool	validate_exit(t_game *game, char **map, int x, int y);
+bool	validate_map(t_game **game);
 t_pos	char_found(int i, int j, int *number);
-t_bool	is_valid_char(char c);
-t_bool	is_border(int rows, int cols, int x, int y);
+bool	is_valid_char(char c);
+bool	is_border(int rows, int cols, int x, int y);
 
 // * Window / Renderization
 void	render_ceils(t_game *game);

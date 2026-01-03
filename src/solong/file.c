@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/headers/so_long.h"
+#include "so_long.h"
 
 /**
  * Replaces the endlines with NULL values in the @param s
@@ -60,11 +60,11 @@ static	t_list	*create_elem(char *line, t_list *list, int *res)
  * Generates a list in which every node contains one single line
  * of the file @param fd
  */
-t_bool	generate_list(int fd, t_game **game)
+bool	generate_list(int fd, t_game **game)
 {
 	char	*line;
 	t_list	*new_elem;
-	t_bool	res;
+	int		res;
 	t_list	*list;
 
 	res = 1;
@@ -98,7 +98,7 @@ t_game	*read_map(char *filename)
 {
 	int		fd;
 	t_game	*game;
-	t_bool	err;
+	bool	err;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)

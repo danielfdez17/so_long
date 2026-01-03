@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/headers/so_long.h"
+#include "so_long.h"
 
 /**
  * @returns an instance of t_pos with the given @param x and @param y

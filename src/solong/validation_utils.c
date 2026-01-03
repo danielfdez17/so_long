@@ -26,7 +26,7 @@ t_pos	char_found(int i, int j, int *number)
  * @returns if the given char @param c is a valid
  * or not.
  */
-bool	is_valid_char(char c)
+int	is_valid_char(char c)
 {
 	return (c == WALL_CHAR
 		|| c == EMPTY_CHAR
@@ -39,7 +39,7 @@ bool	is_valid_char(char c)
  * @returns if the given position @param x @param y is
  * in the border of the map or not
  */
-bool	is_border(int rows, int cols, int x, int y)
+int	is_border(int rows, int cols, int x, int y)
 {
 	if (x == 0 || x == rows - 1)
 		return (1);
@@ -78,10 +78,10 @@ static char	**duplicate_map(t_game *game)
  * @returns 1 if there is no error in the @param game.
  * Otherwise, @returns the corresponding error value
  */
-bool	is_error(t_game *game)
+int	is_error(t_game *game)
 {
-	bool	valid_ways;
-	bool	valid_exit;
+	int		valid_ways;
+	int		valid_exit;
 	t_game	*g;
 
 	if (game->player_number != 1)

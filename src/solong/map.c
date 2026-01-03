@@ -16,7 +16,7 @@
  * Auxiliary function to reduce number of lines of generate_map function.
  * It just initializes the variables
  */
-static bool	init_variables(t_game **game, char ***map)
+static int	init_variables(t_game **game, char ***map)
 {
 	if (!(*game)->list)
 		return (0);
@@ -32,7 +32,7 @@ static bool	init_variables(t_game **game, char ***map)
 /**
  * Creates the map stored in the field list of @param game
  */
-bool	generate_map(t_game **game)
+int	generate_map(t_game **game)
 {
 	int		i;
 	int		line_size;

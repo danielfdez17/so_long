@@ -121,6 +121,18 @@ run2: all
 	clear
 	./$(NAME) ./files/test2.ber
 
+tests: all
+	clear
+	./$(NAME) ./files/bad_border.ber
+	./$(NAME) ./files/bad_char.ber
+	./$(NAME) ./files/bad_collectable_number.ber
+	./$(NAME) ./files/bad_exit_number.ber
+	./$(NAME) ./files/bad_extension.berro
+	./$(NAME) ./files/bad_line_number.ber
+	./$(NAME) ./files/bad_player_number.ber
+	./$(NAME) ./files/no_exit1.ber
+	./$(NAME) ./files/no_exit2.ber
+
 # valgrind: all
 # 	valgrind ./$(NAME) $(FILE)
 
@@ -128,7 +140,7 @@ run2: all
 # 	clear
 # 	gdb ./$(NAME)
 
-.PHONY: all libmlx obj clean fclean re run1 run2
+.PHONY: all libmlx obj clean fclean re run1 run2 tests
 
 # Indicates the main rule to be executed
 .GOAL: all

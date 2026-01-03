@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-bool	free_map(char **map)
+int	free_map(char **map)
 /**
  * Frees the memory allocated by the @param map
  */

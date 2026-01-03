@@ -60,7 +60,7 @@ static	t_list	*create_elem(char *line, t_list *list, int *res)
  * Generates a list in which every node contains one single line
  * of the file @param fd
  */
-bool	generate_list(int fd, t_game **game)
+int 	generate_list(int fd, t_game **game)
 {
 	char	*line;
 	t_list	*new_elem;
@@ -98,7 +98,7 @@ t_game	*read_map(char *filename)
 {
 	int		fd;
 	t_game	*game;
-	bool	err;
+	int		err;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)

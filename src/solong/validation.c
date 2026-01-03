@@ -16,7 +16,7 @@
  * @returns true if the given char @param c
  * is a valid character except the wall ('1')
  */
-static bool	except_wall(char c)
+static int	except_wall(char c)
 {
 	return (c == PLAYER_CHAR
 		|| c == COLLECTABLE_CHAR
@@ -27,7 +27,7 @@ static bool	except_wall(char c)
 /**
  * @returns true if the player can reach every collectable and the exit
  */
-bool	validate_ways(t_game *game, char **map, int x, int y)
+int	validate_ways(t_game *game, char **map, int x, int y)
 {
 	if (!map)
 		return (0);
@@ -54,7 +54,7 @@ bool	validate_ways(t_game *game, char **map, int x, int y)
  * @returns true if the player can reach every collectable
  * considering the exit as a wall
  */
-bool	validate_exit(t_game *game, char **map, int x, int y)
+int	validate_exit(t_game *game, char **map, int x, int y)
 {
 	if (!map)
 		return (0);
@@ -88,7 +88,7 @@ static void	update_chars(t_game *g, char **map, int i, int j)
 		char_found(i, j, &g->collectable_number);
 }
 
-bool	validate_map(t_game **game)
+int		validate_map(t_game **game)
 /**
  * @returns true if the map is valid according to the statement rules
  */
@@ -108,7 +108,7 @@ bool	validate_map(t_game **game)
 		{
 			if (!is_valid_char(map[i][j]))
 				return (INVALID_CHAR_ERROR);
-			if (is_border(g->rows, g->cols, i, j) && map[i][j] != '1')
+			if (is_border(g->rows, g->cols, i, j) && map[i][j] != WALL_CHAR)
 				return (BORDER_ERROR);
 			update_chars(g, map, i, j);
 			j++;

@@ -88,7 +88,7 @@ static void	update_chars(t_game *g, char **map, int i, int j)
 		char_found(i, j, &g->collectable_number);
 }
 
-int		validate_map(t_game **game)
+int	validate_map(t_game **game)
 /**
  * @returns true if the map is valid according to the statement rules
  */

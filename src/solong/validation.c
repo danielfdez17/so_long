@@ -63,6 +63,7 @@ bool	validate_exit(t_game *game, char **map, int x, int y)
 		return (false);
 	if (map[x][y] == 'V' || map[x][y] == WALL_CHAR || map[x][y] == EXIT_CHAR
 		|| map[x][y] == GHOST_CHAR)
+		return (false);
 	if (except_wall(map[x][y]))
 	{
 		if (map[x][y] == COLLECTABLE_CHAR)

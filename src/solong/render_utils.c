@@ -65,19 +65,19 @@ bool	is_valid_ceil(t_game **game, t_pos new_pos)
  */
 void	replace_img(t_game *game, t_pos new_pos)
 {
-	free_single_texture(game->mlx, &game->foreground
-		[game->p_pos.x][game->p_pos.y]);
-	render_image(&game->foreground
-		[game->p_pos.x][game->p_pos.y], EMPTY_CHAR);
-	check_rendered_img(game);
+	free_single_texture(game->mlx, &game->fg
+	[game->p_pos.x][game->p_pos.y]);
+	render_image(&game->fg
+	[game->p_pos.x][game->p_pos.y], EMPTY_CHAR);
+	check_rendered_img(game, game->p_pos);
 	game->p_pos = init_pos(new_pos.x, new_pos.y);
 	game->movs++;
 	render_movs(game);
-	free_single_texture(game->mlx, &game->foreground
-		[game->p_pos.x][game->p_pos.y]);
-	render_image(&game->foreground
-		[game->p_pos.x][game->p_pos.y], PLAYER_CHAR);
-	check_rendered_img(game);
+	free_single_texture(game->mlx, &game->fg
+	[game->p_pos.x][game->p_pos.y]);
+	render_image(&game->fg
+	[game->p_pos.x][game->p_pos.y], PLAYER_CHAR);
+	check_rendered_img(game, game->p_pos);
 }
 
 /**

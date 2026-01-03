@@ -45,7 +45,7 @@ t_game	*init_game(void)
 	game->cols = 0;
 	game->movs = 0;
 	game->mlx = NULL;
-	game->foreground = NULL;
+	game->fg = NULL;
 	game->movements = NULL;
 	return (game);
 }

@@ -72,7 +72,7 @@ void	replace_img(t_game *game, t_pos new_pos);
 void	render_image(t_tex_img *tex_img, char c);
 // void	render_background(t_game *game, int i, int j);
 void	render_single_ceil(t_game *game, int i, int j);
-void	check_rendered_img(t_game *game);
+void	check_rendered_img(t_game *game, t_pos pos);
 void	render_movs(t_game *game);
 // void	render_movs_line(t_game *game, int i, int j);
 void	render_movement_img(t_game *game);

@@ -60,15 +60,15 @@ void	free_textures(t_game *game)
 		j = 0;
 		while (j < game->cols)
 		{
-			if (game->foreground[i][j].img)
-				free_single_texture(game->mlx, &game->foreground[i][j]);
+			if (game->fg[i][j].img)
+				free_single_texture(game->mlx, &game->fg[i][j]);
 			++j;
 		}
-		if (game->foreground)
-			free(game->foreground[i]);
+		if (game->fg)
+			free(game->fg[i]);
 		++i;
 	}
-	free(game->foreground);
+	free(game->fg);
 }
 
 /**
@@ -81,7 +81,7 @@ void	free_game(t_game *game)
 		free_map(game->map);
 		if (game->list)
 			ft_lstclear(&game->list, free);
-		if (game->foreground)
+		if (game->fg)
 			free_textures(game);
 		if (game->mlx)
 			mlx_terminate(game->mlx);

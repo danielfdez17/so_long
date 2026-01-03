@@ -19,14 +19,14 @@ static void	alloc_foreground(t_game **game)
 {
 	int	i;
 
-	(*game)->foreground = malloc(sizeof(t_tex_img *) * ((*game)->rows));
-	if (!(*game)->foreground)
+	(*game)->fg = malloc(sizeof(t_tex_img *) * ((*game)->rows));
+	if (!(*game)->fg)
 		return ;
 	i = 0;
 	while (i < (*game)->rows)
 	{
-		(*game)->foreground[i] = malloc(sizeof(t_tex_img) * (*game)->cols);
-		if (!(*game)->foreground[i])
+		(*game)->fg[i] = malloc(sizeof(t_tex_img) * (*game)->cols);
+		if (!(*game)->fg[i])
 			return ;
 		++i;
 	}
@@ -48,48 +48,36 @@ void	render_movs(t_game *game)
 	if (!msg)
 		return ;
 	mlx_delete_image(game->mlx, game->movements->img);
-	game->movements->img = mlx_put_string(game->mlx, msg, 0, IMG_HEIGHT * game->rows);
+	game->movements->img
+		= mlx_put_string(game->mlx, msg, 0, IMG_HEIGHT * game->rows);
 	free(msg);
 }
 
 void	replace_enemy_sprite(t_game *game, t_pos pos)
 {
-	(void)game, (void)pos;
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	// free_single_texture(game->mlx, &game->foreground[pos.x][pos.y]);
+	mlx_delete_texture(game->fg[pos.x][pos.y].texture);
 	if (tv.tv_sec % MAX_SPRITES == 0)
-		game->foreground[pos.x][pos.y].texture = mlx_load_png("./images/G_0.png");
+		game->fg[pos.x][pos.y].texture = mlx_load_png("./images/G_0.png");
 	else if (tv.tv_sec % MAX_SPRITES == 1)
-		game->foreground[pos.x][pos.y].texture = mlx_load_png("./images/G_1.png");
+		game->fg[pos.x][pos.y].texture = mlx_load_png("./images/G_1.png");
 	else if (tv.tv_sec % MAX_SPRITES == 2)
-		game->foreground[pos.x][pos.y].texture = mlx_load_png("./images/G_2.png");
+		game->fg[pos.x][pos.y].texture = mlx_load_png("./images/G_2.png");
 	else if (tv.tv_sec % MAX_SPRITES == 3)
-		game->foreground[pos.x][pos.y].texture = mlx_load_png("./images/G_3.png");
+		game->fg[pos.x][pos.y].texture = mlx_load_png("./images/G_3.png");
 	else if (tv.tv_sec % MAX_SPRITES == 4)
-		game->foreground[pos.x][pos.y].texture = mlx_load_png("./images/G_4.png");
+		game->fg[pos.x][pos.y].texture = mlx_load_png("./images/G_4.png");
 	else if (tv.tv_sec % MAX_SPRITES == 5)
-		game->foreground[pos.x][pos.y].texture = mlx_load_png("./images/G_5.png");
+		game->fg[pos.x][pos.y].texture = mlx_load_png("./images/G_5.png");
 	else if (tv.tv_sec % MAX_SPRITES == 6)
-		game->foreground[pos.x][pos.y].texture = mlx_load_png("./images/G_6.png");
+		game->fg[pos.x][pos.y].texture = mlx_load_png("./images/G_6.png");
 	else if (tv.tv_sec % MAX_SPRITES == 7)
-		game->foreground[pos.x][pos.y].texture = mlx_load_png("./images/G_7.png");
+		game->fg[pos.x][pos.y].texture = mlx_load_png("./images/G_7.png");
 	else
-		game->foreground[pos.x][pos.y].texture = mlx_load_png("./images/G_8.png");
-	if (!game->foreground[pos.x][pos.y].texture)
-		error();
-	game->foreground[pos.x][pos.y].img
-		= mlx_texture_to_image(game->mlx, game->foreground
-		[pos.x][pos.y].texture);
-	if (!game->foreground[pos.x][pos.y].img)
-		error();
-	mlx_resize_image(game->foreground
-		[pos.x][pos.y].img, IMG_WIDTH, IMG_HEIGHT);
-	if (mlx_image_to_window(game->mlx, game->foreground
-		[pos.x][pos.y].img,
-		IMG_WIDTH * pos.y, IMG_HEIGHT * pos.x) < 0)
-		error();
+		game->fg[pos.x][pos.y].texture = mlx_load_png("./images/G_8.png");
+	check_rendered_img(game, pos);
 }
 
 /**
@@ -121,7 +109,7 @@ int32_t	render_game(t_game *game)
 {
 	alloc_foreground(&game);
 	game->mlx = mlx_init(IMG_WIDTH * (game->cols),
-		IMG_HEIGHT * (game->rows + 1), GAME_NAME, true);
+			IMG_HEIGHT * (game->rows + 1), GAME_NAME, true);
 	if (!game->mlx)
 		return (EXIT_FAILURE);
 	mlx_set_window_limit(game->mlx, IMG_WIDTH * game->cols,

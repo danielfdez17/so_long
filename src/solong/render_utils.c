@@ -118,7 +118,6 @@ void	render_ceils(t_game *game)
 		j = 0;
 		while (j < game->cols)
 		{
-			// render_background(game, i, j);
 			render_single_ceil(game, i, j);
 			++j;
 		}

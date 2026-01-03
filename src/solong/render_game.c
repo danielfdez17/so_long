@@ -65,7 +65,6 @@ void	render_movs(t_game *game)
 int32_t	render_game(t_game *game)
 {
 	alloc_foreground(&game);
-	// alloc_background(&game);
 	game->mlx = mlx_init(IMG_WIDTH * (game->cols),
 			IMG_HEIGHT * (game->rows), GAME_NAME, true);
 	if (!game->mlx)

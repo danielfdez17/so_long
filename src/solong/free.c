@@ -50,25 +50,25 @@ void	free_textures(t_game *game)
 	i = 0;
 	if (!game->mlx)
 		return ;
-	while (i <= game->rows)
+	if (game->movements)
+	{
+		free_single_texture(game->mlx, game->movements);
+		free(game->movements);
+	}
+	while (i < game->rows)
 	{
 		j = 0;
 		while (j < game->cols)
 		{
 			if (game->foreground[i][j].img)
 				free_single_texture(game->mlx, &game->foreground[i][j]);
-			// if (game->background[i][j].img && game->background[i][i].img)
-			// 	free_single_texture(game->mlx, &game->background[i][j]);
 			++j;
 		}
 		if (game->foreground)
 			free(game->foreground[i]);
-		// if (game->background)
-		// 	free(game->background[i]);
 		++i;
 	}
 	free(game->foreground);
-	// free(game->background);
 }
 
 /**

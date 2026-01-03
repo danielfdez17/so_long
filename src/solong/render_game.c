@@ -66,12 +66,12 @@ int32_t	render_game(t_game *game)
 {
 	alloc_foreground(&game);
 	alloc_background(&game);
-	game->mlx = mlx_init(IMG_WIDTH * (game->cols), \
-		IMG_HEIGHT * (game->rows), GAME_NAME, true);
+	game->mlx = mlx_init(IMG_WIDTH * (game->cols),
+			IMG_HEIGHT * (game->rows), GAME_NAME, true);
 	if (!game->mlx)
 		return (EXIT_FAILURE);
-	mlx_set_window_limit(game->mlx, IMG_WIDTH * game->cols, \
-		IMG_HEIGHT * (game->rows), IMG_WIDTH * game->cols, \
+	mlx_set_window_limit(game->mlx, IMG_WIDTH * game->cols,
+		IMG_HEIGHT * (game->rows), IMG_WIDTH * game->cols,
 		IMG_HEIGHT * (game->rows));
 	render_ceils(game);
 	mlx_key_hook(game->mlx, &my_keyhook, game);

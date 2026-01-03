@@ -25,6 +25,8 @@ void	render_image(t_tex_img *tex_img, char c)
 		tex_img->texture = mlx_load_png("./images/P_witch_idle_single.png");
 	else if (c == EXIT_CHAR)
 		tex_img->texture = mlx_load_png("./images/E_exit_single.png");
+	else if (c == GHOST_CHAR)
+		tex_img->texture = mlx_load_png("./images/G_1.png");
 	else
 		tex_img->texture = mlx_load_png("./images/C_mushroom_single.png");
 }
@@ -61,17 +63,17 @@ bool	is_valid_ceil(t_game **game, t_pos new_pos)
  */
 void	replace_img(t_game *game, t_pos new_pos)
 {
-	free_single_texture(game->mlx, &game->foreground \
+	free_single_texture(game->mlx, &game->foreground
 		[game->p_pos.x][game->p_pos.y]);
-	render_image(&game->foreground \
+	render_image(&game->foreground
 		[game->p_pos.x][game->p_pos.y], EMPTY_CHAR);
 	check_rendered_img(game);
 	game->p_pos = init_pos(new_pos.x, new_pos.y);
 	game->movs++;
 	render_movs(game);
-	free_single_texture(game->mlx, &game->foreground \
+	free_single_texture(game->mlx, &game->foreground
 		[game->p_pos.x][game->p_pos.y]);
-	render_image(&game->foreground \
+	render_image(&game->foreground
 		[game->p_pos.x][game->p_pos.y], PLAYER_CHAR);
 	check_rendered_img(game);
 }

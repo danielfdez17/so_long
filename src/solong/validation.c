@@ -21,6 +21,7 @@ static bool	except_wall(char c)
 	return (c == PLAYER_CHAR
 		|| c == COLLECTABLE_CHAR
 		|| c == EXIT_CHAR
+		|| c == GHOST_CHAR
 		|| c == EMPTY_CHAR);
 }
 
@@ -33,13 +34,13 @@ bool	validate_ways(t_game *game, char **map, int x, int y)
 		return (0);
 	if (x < 0 || x >= game->rows || y < 0 || y >= game->cols)
 		return (0);
-	if (map[x][y] == 'V' || map[x][y] == '1')
+	if (map[x][y] == 'V' || map[x][y] == WALL_CHAR)
 		return (0);
 	if (except_wall(map[x][y]))
 	{
-		if (map[x][y] == 'C')
+		if (map[x][y] == COLLECTABLE_CHAR)
 			game->collectable_number--;
-		else if (map[x][y] == 'E')
+		else if (map[x][y] == EXIT_CHAR)
 			game->exit_number--;
 		map[x][y] = 'V';
 	}
@@ -52,7 +53,7 @@ bool	validate_ways(t_game *game, char **map, int x, int y)
 
 /**
  * @returns true if the player can reach every collectable
- * considering the exit as a wall
+ * considering the exit and enemies as a walls
  */
 bool	validate_exit(t_game *game, char **map, int x, int y)
 {
@@ -60,8 +61,13 @@ bool	validate_exit(t_game *game, char **map, int x, int y)
 		return (0);
 	if (x < 0 || x >= game->rows || y < 0 || y >= game->cols)
 		return (0);
-	if (map[x][y] == 'V' || map[x][y] == WALL_CHAR || map[x][y] == EXIT_CHAR)
+	if (map[x][y] == 'V' || map[x][y] == WALL_CHAR || map[x][y] == EXIT_CHAR
+		|| map[x][y] == GHOST_CHAR)
 		return (0);
+	// {
+	// 	if (map[x][y] == GHOST_CHAR)
+	// 		printf("Found ghost\n");
+	// }
 	if (except_wall(map[x][y]))
 	{
 		if (map[x][y] == COLLECTABLE_CHAR)
@@ -108,7 +114,7 @@ bool	validate_map(t_game **game)
 		{
 			if (!is_valid_char(map[i][j]))
 				return (INVALID_CHAR_ERROR);
-			if (is_border(g->rows, g->cols, i, j) && map[i][j] != '1')
+			if (is_border(g->rows, g->cols, i, j) && map[i][j] != WALL_CHAR)
 				return (BORDER_ERROR);
 			update_chars(g, map, i, j);
 			j++;

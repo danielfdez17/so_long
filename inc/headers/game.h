@@ -21,6 +21,7 @@
 # define COLLECTABLE_CHAR 'C'
 # define WALL_CHAR '1'
 # define EMPTY_CHAR '0'
+# define GHOST_CHAR 'G'
 # define IMG_WIDTH 64
 # define IMG_HEIGHT 64
 

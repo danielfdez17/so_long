@@ -32,6 +32,7 @@ bool	is_valid_char(char c)
 		|| c == EMPTY_CHAR
 		|| c == EXIT_CHAR
 		|| c == PLAYER_CHAR
+		|| c == GHOST_CHAR
 		|| c == COLLECTABLE_CHAR);
 }
 

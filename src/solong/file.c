@@ -109,6 +109,12 @@ t_game	*read_map(char *filename)
 	game = init_game();
 	if (!generate_list(fd, &game) || !generate_map(&game))
 		return (print_and_free(game, LINE_NUMBER_ERROR));
+	t_list *aux = game->list;
+	while (aux)
+	{
+		printf("%s\n", (char *)aux->content);
+		aux = aux->next;
+	}
 	err = validate_map(&game);
 	close(fd);
 	if (err <= 0)
